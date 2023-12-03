@@ -6,7 +6,7 @@
 #    By: flafi <flafi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/01 16:40:23 by flafi             #+#    #+#              #
-#    Updated: 2023/12/01 16:43:56 by flafi            ###   ########.fr        #
+#    Updated: 2023/12/02 19:01:19 by flafi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ NAME = minishell
 CFLAGS = -Wall -Wextra -Werror 
 CC = cc
 
-SRCS = minishell.c
+SRCS = minishell.c ./utils/garbage_collector.c
 OBJS = $(SRCS:.c=.o)
 
 

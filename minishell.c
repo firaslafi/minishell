@@ -6,7 +6,14 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/01 16:19:22 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/03 17:41:02 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "./minishell.h"
+
+int main(int argc, char **argv, char **env)
+{
+    
+    return(0);
+}
