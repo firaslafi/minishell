@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:24 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/04 18:13:24 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/07 19:56:19 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 
 # include <stdio.h>
 # include <stdlib.h>
-
+#include <readline/readline.h>
+#include <readline/history.h>
+# include "./libft/libft.h"
 // ANSI color escape codes
 # define ANSI_COLOR_RED "\x1b[31m"
 # define ANSI_COLOR_GREEN "\x1b[32m"
@@ -28,5 +30,19 @@ typedef struct mem_block
 	void				*block_pointer;
 	struct mem_block	*next;
 }						t_mem_block;
+
+// typedef struct s_list
+// {
+// 	// t_type			type;
+// 	struct s_list	*next;
+// 	struct s_list	*prev;
+// 	char			*content;
+// }	t_list;
+
+// typedef struct s_glob
+// {
+// 	char** 	env
+// }						t_glob;
+
 
 #endif
