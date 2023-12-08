@@ -31,6 +31,13 @@ typedef struct mem_block
 	struct mem_block	*next;
 }						t_mem_block;
 
+// Structure to represent a history entry
+typedef struct s_historylist
+{
+    char			 *command;
+    struct s_historylist *next;
+} t_historylist;
+
 // typedef struct s_list
 // {
 // 	// t_type			type;
@@ -44,5 +51,7 @@ typedef struct mem_block
 // 	char** 	env
 // }						t_glob;
 
-
+void	*ft_malloc(t_mem_block **lst, int size);
+void	ft_free_all(t_mem_block **lst);
+char	*ft_strdup_s(const char *s, t_mem_block **lst);
 #endif
