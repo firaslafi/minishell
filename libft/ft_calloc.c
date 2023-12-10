@@ -1,35 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/10 03:50:40 by mbelhaj-         ###   ########.fr       */
+/*   Created: 2023/03/30 23:03:40 by mbelhaj-          #+#    #+#             */
+/*   Updated: 2023/03/31 02:31:15 by mbelhaj-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
+#include "libft.h"
+#include <stdlib.h>
 
-int	main(int argc, char **argv)
+void	*ft_calloc(size_t nelem, size_t n_size)
 {
-	int		i;
-	int		j;
-	int		j;
-	char	currentChar;
+	void	*ptr;
 
-	i = 1;
-	j = 0;
-	while (i < argc)
+	ptr = malloc(nelem * n_size);
+	if (!ptr)
 	{
-		j = 0;
-		while (argv[i][j] != '\0')
-		{
-			currentChar = argv[i][j];
-			
-			++j;
-		}
-		++i;
+		return (ptr);
 	}
+	ft_bzero(ptr, nelem * n_size);
+	return (ptr);
 }

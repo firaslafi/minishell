@@ -1,35 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/10 03:50:40 by mbelhaj-         ###   ########.fr       */
+/*   Created: 2023/03/23 18:39:06 by mbelhaj-          #+#    #+#             */
+/*   Updated: 2023/03/28 23:12:59 by mbelhaj-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
+#include <unistd.h>
 
-int	main(int argc, char **argv)
+int	ft_atoi(const char *c)
 {
-	int		i;
-	int		j;
-	int		j;
-	char	currentChar;
+	int	result;
+	int	sign;
+	int	i;
 
-	i = 1;
-	j = 0;
-	while (i < argc)
+	result = 0;
+	sign = 1;
+	i = 0;
+	while (c[i] == ' ' || c[i] == '\t' || c[i] == '\n' || c[i] == '\f'
+		|| c[i] == '\r' || c[i] == '\v')
+		i++;
+	if (c[i] == '+' || c[i] == '-')
 	{
-		j = 0;
-		while (argv[i][j] != '\0')
+		if (c[i] == '-')
 		{
-			currentChar = argv[i][j];
-			
-			++j;
+			sign = sign * -1;
 		}
-		++i;
+		i++;
 	}
+	while (c[i] >= '0' && c[i] <= '9')
+	{
+		result = result * 10 + (c[i] - '0');
+		i++;
+	}
+	return (sign * result);
 }

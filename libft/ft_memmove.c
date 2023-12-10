@@ -1,35 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/10 03:50:40 by mbelhaj-         ###   ########.fr       */
+/*   Created: 2023/03/28 05:59:47 by mbelhaj-          #+#    #+#             */
+/*   Updated: 2023/04/23 22:48:03 by mbelhaj-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv)
+void	*ft_memmove(void *dest, const void *src, int n)
 {
-	int		i;
-	int		j;
-	int		j;
-	char	currentChar;
+	char		*d;
+	const char	*s;
 
-	i = 1;
-	j = 0;
-	while (i < argc)
+	d = (char *) dest;
+	s = (const char *) src;
+	if (s == 0 && d == 0)
+		return (NULL);
+	if (d <= s)
 	{
-		j = 0;
-		while (argv[i][j] != '\0')
+		while (n--)
 		{
-			currentChar = argv[i][j];
-			
-			++j;
+			*d++ = *s++;
 		}
-		++i;
 	}
+	else
+	{
+		d += n;
+		s += n;
+		while (n--)
+			*(--d) = *(--s);
+	}
+	return (dest);
 }

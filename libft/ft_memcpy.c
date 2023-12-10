@@ -1,35 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/10 03:50:40 by mbelhaj-         ###   ########.fr       */
+/*   Created: 2023/03/23 18:33:22 by mbelhaj-          #+#    #+#             */
+/*   Updated: 2023/04/06 15:05:03 by mbelhaj-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
+#include <unistd.h>
 
-int	main(int argc, char **argv)
+char	*ft_memcpy(void *dest, const void *src, int n)
 {
 	int		i;
-	int		j;
-	int		j;
-	char	currentChar;
+	char	*d;
+	char	*s;
 
-	i = 1;
-	j = 0;
-	while (i < argc)
+	d = (char *) dest;
+	s = (char *) src;
+	if (!dest && !src)
+		return (dest);
+	i = 0;
+	while (n--)
 	{
-		j = 0;
-		while (argv[i][j] != '\0')
-		{
-			currentChar = argv[i][j];
-			
-			++j;
-		}
-		++i;
+		d[i] = s[i];
+		i++;
 	}
+	return (dest);
 }
+//norminette is okay

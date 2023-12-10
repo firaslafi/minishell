@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: flafi <flafi@student.42.fr>                +#+  +:+       +#+         #
+#    By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/01 16:40:23 by flafi             #+#    #+#              #
-#    Updated: 2023/12/02 19:01:19 by flafi            ###   ########.fr        #
+#    Updated: 2023/12/10 02:57:01 by mbelhaj-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,21 +21,22 @@ WHITE = \033[0;97m
 
 .SILENT:
 NAME = minishell
-CFLAGS = -Wall -Wextra -Werror 
+CFLAGS = 
 CC = cc
+
+LIBFT_DIR = ./libft
+
+LIBFT = $(LIBFT_DIR)/libft.a
+LIBFT_INC = -I$(LIBFT_DIR)
 
 SRCS = minishell.c ./utils/garbage_collector.c
 OBJS = $(SRCS:.c=.o)
 
-
-
-$(NAME): $(OBJS) 
-	cc  $(SRCS) -o $(NAME) $(CFLAGS)
+$(NAME): $(OBJS) $(LIBFT)
+	$(CC) $(OBJS) -o $(NAME) $(CFLAGS) $(LIBFT)
 	echo "$(GREEN)Minishell Compiled$(DEF_COLOR)"
 
 all: $(NAME)
-
-
 
 clean:
 	rm -f $(OBJS)
@@ -46,5 +47,8 @@ fclean: clean
 	echo "Everything is clean"
 
 re: fclean all
+
+$(LIBFT):
+	make -C $(LIBFT_DIR)
 
 .PHONY: all clean fclean re

@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/10 03:50:40 by mbelhaj-         ###   ########.fr       */
+/*   Created: 2023/03/25 02:20:59 by mbelhaj-          #+#    #+#             */
+/*   Updated: 2023/03/29 04:12:31 by mbelhaj-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv)
+char	*ft_strnstr(const char *haystack, const char *needle, size_t n)
 {
-	int		i;
-	int		j;
-	int		j;
-	char	currentChar;
+	size_t	needle_len;
 
-	i = 1;
-	j = 0;
-	while (i < argc)
+	needle_len = ft_strlen(needle);
+	if (needle_len == 0)
 	{
-		j = 0;
-		while (argv[i][j] != '\0')
-		{
-			currentChar = argv[i][j];
-			
-			++j;
-		}
-		++i;
+		return ((char *)haystack);
 	}
+	while (*haystack != '\0' && n-- >= needle_len)
+	{
+		if (*haystack == *needle
+			&& ft_strncmp(haystack, needle, needle_len) == 0)
+			return ((char *)haystack);
+		haystack++;
+	}
+	return (NULL);
 }

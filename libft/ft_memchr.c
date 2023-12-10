@@ -1,35 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/10 03:50:40 by mbelhaj-         ###   ########.fr       */
+/*   Created: 2023/03/23 18:27:45 by mbelhaj-          #+#    #+#             */
+/*   Updated: 2023/03/28 02:52:46 by mbelhaj-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
+#include<unistd.h>
 
-int	main(int argc, char **argv)
+void	*ft_memchr(const void *s, int c, int n)
 {
-	int		i;
-	int		j;
-	int		j;
-	char	currentChar;
+	const unsigned char	*p;
 
-	i = 1;
-	j = 0;
-	while (i < argc)
+	p = s;
+	while (n--)
 	{
-		j = 0;
-		while (argv[i][j] != '\0')
+		if (*p == (unsigned char) c)
 		{
-			currentChar = argv[i][j];
-			
-			++j;
+			return ((void *)p);
 		}
-		++i;
+		p++;
 	}
+	return (NULL);
 }
+//norminette is okay

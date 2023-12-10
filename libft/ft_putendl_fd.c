@@ -1,35 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/10 03:50:40 by mbelhaj-         ###   ########.fr       */
+/*   Created: 2023/04/01 05:38:55 by mbelhaj-          #+#    #+#             */
+/*   Updated: 2023/04/01 05:48:02 by mbelhaj-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv)
+char	ft_putendl_fd(char *s, int fd)
 {
-	int		i;
-	int		j;
-	int		j;
-	char	currentChar;
+	int	i;
 
-	i = 1;
-	j = 0;
-	while (i < argc)
+	i = 0;
+	while (s[i] != '\0')
 	{
-		j = 0;
-		while (argv[i][j] != '\0')
-		{
-			currentChar = argv[i][j];
-			
-			++j;
-		}
-		++i;
+		write(fd, &s[i], 1);
+		i++;
 	}
+	write(fd, "\n", 1);
+	return (0);
 }

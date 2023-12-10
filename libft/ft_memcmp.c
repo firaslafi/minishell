@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/10 03:50:40 by mbelhaj-         ###   ########.fr       */
+/*   Created: 2023/03/21 16:13:53 by mbelhaj-          #+#    #+#             */
+/*   Updated: 2023/03/28 05:00:03 by mbelhaj-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
+#include <unistd.h>
 
-int	main(int argc, char **argv)
+int	ft_memcmp(const void *ptr1, const void *ptr2, int n)
 {
-	int		i;
-	int		j;
-	int		j;
-	char	currentChar;
+	const unsigned char	*p1;
+	const unsigned char	*p2;
 
-	i = 1;
-	j = 0;
-	while (i < argc)
+	p1 = (const unsigned char *) ptr1;
+	p2 = (const unsigned char *) ptr2;
+	while (n-- > 0)
 	{
-		j = 0;
-		while (argv[i][j] != '\0')
+		if (*p1 != *p2)
 		{
-			currentChar = argv[i][j];
-			
-			++j;
+			return ((unsigned char)*p1 - (unsigned char)*p2);
 		}
-		++i;
+		p1++;
+		p2++;
 	}
+	return (0);
 }

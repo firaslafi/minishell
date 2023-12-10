@@ -1,35 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/10 03:50:40 by mbelhaj-         ###   ########.fr       */
+/*   Created: 2023/04/03 02:17:50 by mbelhaj-          #+#    #+#             */
+/*   Updated: 2023/04/03 03:41:06 by mbelhaj-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv)
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	int		i;
-	int		j;
-	int		j;
-	char	currentChar;
+	unsigned int	len;
+	char			*rlt;
+	unsigned int	i;
 
-	i = 1;
-	j = 0;
-	while (i < argc)
+	i = 0;
+	len = 0;
+	while (s[len])
+		len++;
+	rlt = (char *) malloc ((len + 1) * sizeof(char));
+	if (!rlt)
+		return (NULL);
+	while (i < len)
 	{
-		j = 0;
-		while (argv[i][j] != '\0')
-		{
-			currentChar = argv[i][j];
-			
-			++j;
-		}
-		++i;
+		rlt[i] = f(i, s[i]);
+		i++;
 	}
+	rlt[len] = '\0';
+	return (rlt);
 }

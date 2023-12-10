@@ -1,35 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/10 03:50:40 by mbelhaj-         ###   ########.fr       */
+/*   Created: 2023/03/23 18:29:19 by mbelhaj-          #+#    #+#             */
+/*   Updated: 2023/03/25 23:01:05 by mbelhaj-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
+#include <unistd.h>
 
-int	main(int argc, char **argv)
+int	ft_isascii(int c)
 {
-	int		i;
-	int		j;
-	int		j;
-	char	currentChar;
-
-	i = 1;
-	j = 0;
-	while (i < argc)
-	{
-		j = 0;
-		while (argv[i][j] != '\0')
-		{
-			currentChar = argv[i][j];
-			
-			++j;
-		}
-		++i;
-	}
+	if (c >= 0 && c <= 127)
+		return (1);
+	else
+		return (0);
 }
+//norminette is okay

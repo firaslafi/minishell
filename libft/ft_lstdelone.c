@@ -1,35 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/10 03:50:40 by mbelhaj-         ###   ########.fr       */
+/*   Created: 2023/04/03 10:28:03 by mbelhaj-          #+#    #+#             */
+/*   Updated: 2023/04/03 10:31:27 by mbelhaj-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv)
+void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
-	int		i;
-	int		j;
-	int		j;
-	char	currentChar;
-
-	i = 1;
-	j = 0;
-	while (i < argc)
+	if (lst != NULL)
 	{
-		j = 0;
-		while (argv[i][j] != '\0')
+		if (del != NULL)
 		{
-			currentChar = argv[i][j];
-			
-			++j;
+			del(lst->content);
 		}
-		++i;
+		free(lst);
 	}
 }

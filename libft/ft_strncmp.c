@@ -1,35 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/10 03:50:40 by mbelhaj-         ###   ########.fr       */
+/*   Created: 2023/03/26 23:44:43 by mbelhaj-          #+#    #+#             */
+/*   Updated: 2023/03/29 03:43:53 by mbelhaj-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
+#include <unistd.h>
 
-int	main(int argc, char **argv)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	int		i;
-	int		j;
-	int		j;
-	char	currentChar;
+	size_t	i;
 
-	i = 1;
-	j = 0;
-	while (i < argc)
+	i = 0;
+	while (i < n)
 	{
-		j = 0;
-		while (argv[i][j] != '\0')
+		if (s1[i] != s2[i])
 		{
-			currentChar = argv[i][j];
-			
-			++j;
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 		}
-		++i;
+		if (s1[i] == '\0')
+		{
+			return (0);
+		}
+		i++;
 	}
+	return (0);
 }
+//norminette is okay

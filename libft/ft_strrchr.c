@@ -1,35 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/10 03:50:40 by mbelhaj-         ###   ########.fr       */
+/*   Created: 2023/03/23 18:26:14 by mbelhaj-          #+#    #+#             */
+/*   Updated: 2023/04/07 17:28:01 by mbelhaj-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
+#include <unistd.h>
 
-int	main(int argc, char **argv)
+char	*ft_strrchr(const char *s, int c)
 {
-	int		i;
-	int		j;
-	int		j;
-	char	currentChar;
+	const char	*l;
 
-	i = 1;
-	j = 0;
-	while (i < argc)
+	l = NULL;
+	while (*s != '\0')
 	{
-		j = 0;
-		while (argv[i][j] != '\0')
+		if (*s == (char)c)
 		{
-			currentChar = argv[i][j];
-			
-			++j;
+			l = s;
 		}
-		++i;
+		s++;
 	}
+	if (*s == (char)c)
+	{
+		return ((char *)s);
+	}
+	return ((char *)l);
 }
+//norminette is okay

@@ -1,35 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/10 03:50:40 by mbelhaj-         ###   ########.fr       */
+/*   Created: 2023/03/25 03:42:11 by mbelhaj-          #+#    #+#             */
+/*   Updated: 2023/03/29 04:02:56 by mbelhaj-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv)
+size_t	ft_strlcpy(char *dest, const char *src, size_t n)
 {
-	int		i;
-	int		j;
-	int		j;
-	char	currentChar;
+	size_t	i;
 
-	i = 1;
-	j = 0;
-	while (i < argc)
-	{
-		j = 0;
-		while (argv[i][j] != '\0')
+	i = 0;
+	if (n > 0)
+	{		
+		while (i < n - 1 && src[i] != '\0')
 		{
-			currentChar = argv[i][j];
-			
-			++j;
+			dest[i] = src[i];
+			i++;
 		}
-		++i;
+		dest[i] = '\0';
 	}
+	return ((int) ft_strlen(src));
 }
