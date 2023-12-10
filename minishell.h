@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:24 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/07 19:56:19 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/10 20:34:26 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+# include <signal.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 # include "./libft/libft.h"
@@ -38,6 +39,10 @@ typedef struct s_historylist
     struct s_historylist *next;
 } t_historylist;
 
+typedef struct	s_mini
+{
+    char test;
+} t_mini;
 // typedef struct s_list
 // {
 // 	// t_type			type;

@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/07 20:03:09 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/10 23:20:06 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,40 +43,53 @@ void ft_add_history(const char *command, t_historylist **history, t_mem_block **
     newEntry->next = NULL;
     add_history_front(history, newEntry);
 }
-int main(int argc, char **argv, char **env)
-{
-    char *input;
-    t_historylist *history = NULL;
-    t_mem_block *lst = NULL;
-    (void)argv;
-    (void)env;
+    // t_historylist *history = NULL;
+        // t_historylist *current = history;
 
+        // printf("History:\n");
+        //     while (current != NULL)
+        //     {
+        //         printf("%d: %s\n", index++, current->command);
+        //         current = current->next;
+        //     }
+// call ft_add_history(input, &history, &lst);
+/* above is pointless*//* above is pointless*/
+/* above is pointless*//* above is pointless*/
+
+
+int main(int argc, char **env)
+{
+    // char *input;
+    t_mem_block *lst = NULL;
+    // char **token;
+    (void)env;
+    
     if (argc != 1)
     {
         printf("error\n");
         exit(1);
     }
     //  testing here
-    int index = 0;
-
-    while(index < 3)
-    {
-        input = readline(ANSI_COLOR_GREEN"MyShell$ "ANSI_COLOR_RESET);
-        if (input[0] != '\0')
-        {
-            ft_add_history(input, &history, &lst);
-            free(input);
-            index++;
-        }
-    }
-        t_historylist *current = history;
-
-        printf("History:\n");
-            while (current != NULL)
-            {
-                printf("%d: %s\n", index++, current->command);
-                current = current->next;
-            }
+    
+    // env copy
+    char *envcpy = ft_malloc(&lst, ft_strlen(*env) + 1);
+    ft_strcpy(envcpy, *env);
+    printf("env = %s", envcpy);
+    //  i need to make it copy full 2D
+    
+    // while(1)
+    // {
+    //     input = readline(ANSI_COLOR_GREEN"MyShell$ "ANSI_COLOR_RESET);
+    //     if (input[0] != '\0')
+    //     {
+    //         //  check if it is builtin or not
+    //         // if it is builtin i need to call a fucntion to excute the bultints 
+    //         add_history(input);
+    //         free(input);
+    //     }
+    //     token = history_tokenize(input);
+    //     printf("last token= %s\n", *token);
+    // }
     ft_free_all(&lst);
     
 
