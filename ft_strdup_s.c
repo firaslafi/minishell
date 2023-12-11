@@ -21,6 +21,8 @@ char	*ft_strdup_s(const char *s, t_mem_block **lst)
 
 	len = ft_strlen(s) + 1;
 	ptr = ft_calloc_s(len, 1, lst);
+
+
 	if (!ptr)
 		return (free(ptr), NULL);
 	i = 0;

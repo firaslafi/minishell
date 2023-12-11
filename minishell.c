@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/10 23:20:06 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/11 18:44:55 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,36 @@ void ft_add_history(const char *command, t_historylist **history, t_mem_block **
 /* above is pointless*//* above is pointless*/
 /* above is pointless*//* above is pointless*/
 
-
-int main(int argc, char **env)
+char  **make_encpy(char **envp, t_mem_block *lst)
 {
-    // char *input;
+    int envp_size = 0;
+    while (envp[envp_size]) 
+    {
+        envp_size++;
+    }
+    char **envcpy = ft_malloc(&lst, (envp_size + 1) * sizeof(char *));
+    // Allocate memory for envcpy
+    if (envcpy == NULL)
+    {
+        printf("Memory allocation failed\n");
+        exit(1);
+    }
+    int i = 0;
+    while (envp[i]) 
+    {
+        // Allocate memory for each environment variable and copy its content
+        envcpy[i] = ft_strdup_s(envp[i], &lst);
+        i++;
+    }
+     envcpy[i] = NULL;
+     return (envcpy);
+}
+int	main(int argc, char **argv, char **envp)
+{
+    char *input;
     t_mem_block *lst = NULL;
-    // char **token;
-    (void)env;
+    char **token;
+    (void)argv;
     
     if (argc != 1)
     {
@@ -70,29 +93,27 @@ int main(int argc, char **env)
         exit(1);
     }
     //  testing here
+    char **envcpy = make_encpy(envp, lst);
+    (void)envcpy;
+  
     
-    // env copy
-    char *envcpy = ft_malloc(&lst, ft_strlen(*env) + 1);
-    ft_strcpy(envcpy, *env);
-    printf("env = %s", envcpy);
-    //  i need to make it copy full 2D
-    
-    // while(1)
-    // {
-    //     input = readline(ANSI_COLOR_GREEN"MyShell$ "ANSI_COLOR_RESET);
-    //     if (input[0] != '\0')
-    //     {
-    //         //  check if it is builtin or not
-    //         // if it is builtin i need to call a fucntion to excute the bultints 
-    //         add_history(input);
-    //         free(input);
-    //     }
-    //     token = history_tokenize(input);
-    //     printf("last token= %s\n", *token);
-    // }
+    while(1)
+    {
+        input = readline(ANSI_COLOR_GREEN"MyShell$ "ANSI_COLOR_RESET);
+        if (input[0] != '\0')
+        {
+            //  check if it is builtin or not
+            // if it is builtin i need to call a fucntion to excute the bultints 
+            add_history(input);
+            free(input);
+        }
+        token = history_tokenize(input);
+        printf("last token= %s\n", *token);
+    }
     ft_free_all(&lst);
     
-
+    // system("leaks minishell");
+    
     // printf("PATH : %s\n", getenv("PATH"));
     // printf("HOME : %s\n", getenv("HOME"));
     // printf("ROOT : %s\n", getenv("ROOT"));
