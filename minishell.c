@@ -80,6 +80,7 @@ char  **make_encpy(char **envp, t_mem_block *lst)
      envcpy[i] = NULL;
      return (envcpy);
 }
+
 int	main(int argc, char **argv, char **envp)
 {
     char *input;
@@ -95,20 +96,22 @@ int	main(int argc, char **argv, char **envp)
     //  testing here
     char **envcpy = make_encpy(envp, lst);
     (void)envcpy;
-  
-    
-    while(1)
+    // (void)envp;
+    // (void)lst;
+
+    while (1)
     {
         input = readline(ANSI_COLOR_GREEN"MyShell$ "ANSI_COLOR_RESET);
-        if (input[0] != '\0')
+
+        if (input[0] != '\0') 
         {
-            //  check if it is builtin or not
-            // if it is builtin i need to call a fucntion to excute the bultints 
             add_history(input);
+            token = history_tokenize(input);
             free(input);
         }
-        token = history_tokenize(input);
-        printf("last token= %s\n", *token);
+        
+        printf("cmd = %s\n", *token);
+        free(token);
     }
     ft_free_all(&lst);
     

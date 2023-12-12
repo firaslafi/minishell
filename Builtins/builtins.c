@@ -15,29 +15,24 @@
 //  check if it is builtin or not
 int is_builtin(char *cmd)
 {
-    if (ft_strcmp(cmd, "echo") == 0 && /* check for options */) {
-        // handle echo command with options
+    if (ft_strncmp(cmd, "echo", 4) == 0)
+        {
+            ft_echo();
+        }
+    else if (ft_strncmp(cmd, "cd", 2) == 0)
         return 1;
-    } else if (ft_strcmp(cmd, "cd") == 0 && /* check for relative/absolute path */) {
-        // handle cd command with a path
+    else if (ft_strcmp(cmd, "pwd") == 0)
         return 1;
-    } else if (ft_strcmp(cmd, "pwd") == 0) {
-        // handle pwd command
+    else if (ft_strcmp(cmd, "export") == 0)
         return 1;
-    } else if (ft_strcmp(cmd, "export") == 0) {
-        // handle export command
+    else if (ft_strcmp(cmd, "unset") == 0)
         return 1;
-    } else if (ft_strcmp(cmd, "unset") == 0) {
-        // handle unset command
+    else if (ft_strcmp(cmd, "env") == 0)
         return 1;
-    } else if (ft_strcmp(cmd, "env") == 0) {
-        // handle env command
+    else if (ft_strcmp(cmd, "exit") == 0)
         return 1;
-    } else if (ft_strcmp(cmd, "exit") == 0) {
-        // handle exit command
+    else
         return 1;
-    } else
-        return 0; // Not a built-in command
 }
 
 
