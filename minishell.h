@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:24 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/10 20:34:26 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/12 19:54:26 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,5 @@ typedef struct	s_mini
 void	*ft_malloc(t_mem_block **lst, int size);
 void	ft_free_all(t_mem_block **lst);
 char	*ft_strdup_s(const char *s, t_mem_block **lst);
+int     is_builtin(char **cmd);
 #endif

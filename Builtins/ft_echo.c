@@ -3,7 +3,7 @@
 
 #include "./minishell.h"
 
-void ft_echo()
+void ft_echo(char *str)
 {
-    x
+    printf("%s");
 }

@@ -6,7 +6,7 @@
 #    By: flafi <flafi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/01 16:40:23 by flafi             #+#    #+#              #
-#    Updated: 2023/12/07 20:05:01 by flafi            ###   ########.fr        #
+#    Updated: 2023/12/12 17:38:34 by flafi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ LIB = -lreadline
 LIBFT = libft/libft.a
 CC = cc
 
-SRCS = minishell.c ./utils/garbage_collector.c ft_strdup_s.c
+SRCS = minishell.c ./utils/garbage_collector.c ft_strdup_s.c ./builtins/builtin.c
 OBJS = $(SRCS:.c=.o)
 
 

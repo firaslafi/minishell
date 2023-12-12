@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/11 18:44:55 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/12 20:00:36 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,20 +99,30 @@ int	main(int argc, char **argv, char **envp)
     // (void)envp;
     // (void)lst;
 
-    while (1)
+    while (1) 
     {
-        input = readline(ANSI_COLOR_GREEN"MyShell$ "ANSI_COLOR_RESET);
+        input = readline(ANSI_COLOR_GREEN"MyShell$ " ANSI_COLOR_RESET);
 
+        if (input == NULL)
+            break; // Exit the loop if input is NULL (EOF or error)
         if (input[0] != '\0') 
         {
             add_history(input);
             token = history_tokenize(input);
             free(input);
+            if (token != NULL && *token != NULL)
+            {
+                // printf("cmd = %s\n", *token);
+                is_builtin(token);
+                free(token);
+            } else if (token != NULL) {
+                free(token); // Free memory for an empty token
+            }
+        } else {
+            free(input); // Free memory for an empty input
         }
-        
-        printf("cmd = %s\n", *token);
-        free(token);
     }
+
     ft_free_all(&lst);
     
     // system("leaks minishell");
