@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/12 20:00:36 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/13 21:26:13 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,11 @@ int	main(int argc, char **argv, char **envp)
     char *input;
     t_mem_block *lst = NULL;
     char **token;
+    
+    // init struct idk how many things
+    t_mini minish;
+    minish.env = envp;
+    // system("leaks minishell");
     (void)argv;
     
     if (argc != 1)
@@ -95,7 +100,9 @@ int	main(int argc, char **argv, char **envp)
     }
     //  testing here
     char **envcpy = make_encpy(envp, lst);
+    
     (void)envcpy;
+
     // (void)envp;
     // (void)lst;
 
@@ -113,7 +120,7 @@ int	main(int argc, char **argv, char **envp)
             if (token != NULL && *token != NULL)
             {
                 // printf("cmd = %s\n", *token);
-                is_builtin(token);
+                is_builtin(token, minish);
                 free(token);
             } else if (token != NULL) {
                 free(token); // Free memory for an empty token

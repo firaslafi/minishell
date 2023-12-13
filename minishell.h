@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:24 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/12 19:54:26 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/13 21:26:36 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,10 @@ typedef struct s_historylist
 
 typedef struct	s_mini
 {
-    char test;
+    char **env;
+    char *pwd;
 } t_mini;
-// typedef struct s_list
-// {
-// 	// t_type			type;
-// 	struct s_list	*next;
-// 	struct s_list	*prev;
-// 	char			*content;
-// }	t_list;
+
 
 // typedef struct s_glob
 // {
@@ -59,5 +54,5 @@ typedef struct	s_mini
 void	*ft_malloc(t_mem_block **lst, int size);
 void	ft_free_all(t_mem_block **lst);
 char	*ft_strdup_s(const char *s, t_mem_block **lst);
-int     is_builtin(char **cmd);
+int     is_builtin(char **cmd, t_mini minish);
 #endif
