@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 21:56:08 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/13 23:04:57 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/14 22:49:04 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 // move to the echo file
 // temp echo not finished
-// void ft_quotes()
+//  work on the $variables
+
+// removes quotes " and ' from a string
 void remove_quotes(char *str)
 {
     int i = 0;
@@ -62,42 +64,100 @@ void ft_echo(char **cmd)
         write(1, "\n", 1);
 
 }
+// priting the pwd a.k.a cwd
 void ft_pwd(char **cmd, char **env)
 {
-    char *pwd;
-    int i;
-    (void)cmd;
-	i = 0;
-	while (env[i])
-	{
-		if (ft_strnstr(env[i], "PWD", 3))
-			break ;
-		i++;
-	}
-    pwd = ft_substr(env[i], 4, ft_strlen(env[i]) - 4);
-    ft_putendl_fd(pwd, 1);
-}
 
+    (void)cmd;
+    (void)env;
+
+    char cwd[4096];
+    getcwd(cwd, sizeof(cwd));
+    // ft_putendl_fd(pwd, 1);
+    ft_putendl_fd(cwd, 1);
+}
+// get the current working directory
+char *get_cwd()
+{
+    char cwd[4096];
+    char *path;
+    
+    path = NULL;
+    getcwd(cwd, sizeof(cwd));
+    path = cwd;
+    return (path);
+}
+//  find the post of last slash (cd)
+int last_slash_pos(const char *str)
+{
+    int len = ft_strlen(str);
+    int position = -1; // Default position if no slash is found
+    int i = len - 1; // Start from the end of the string
+    
+    while (i >= 0) 
+    {
+        if (str[i] == '/') {
+            position = i;
+            break;
+        }
+        i--;
+    }
+    return position;
+}
+// remove the last found slash (cd)
+char *rm_lastfld(char *cwd)
+{
+    char *path;
+    int i;
+    
+    i = last_slash_pos(cwd);
+    path = NULL;
+    if (i != -1)
+    {
+        if (i == 0)
+            return ("/");
+        path = ft_substr(cwd, 0, i);
+    }
+    
+    return (path);
+}
+// obviously for changing directory
 void ft_cd(char **cmd, t_mini minish)
 {
     char *home_path;
+    char *cdto_path;
+    
     (void)minish;
     home_path = getenv("HOME");
+    cdto_path = NULL;
     if(!home_path)
         home_path = "/";
+    if (cmd[1] == NULL)
+        {
+            chdir(home_path);
+            return;
+        }
     if (cmd[1] != NULL)
     {
         if (ft_strncmp(cmd[1], "-", 1) == 0)
         {
-            if(!getenv("OLDPWD"))
+            cdto_path = getenv("OLDPWD");
+            if(!cdto_path)
                 ft_putendl_fd("cd: OLDPWD not set", 2);
-            else
-            {
-                printf("we need to CD !! with error handling\n");
-            }
         }
+        else if (ft_strncmp(cmd[1], "~", 1) == 0)
+            cdto_path = home_path;
+        else if (ft_strncmp(cmd[1], "..", 2) == 0)
+            cdto_path = rm_lastfld(get_cwd());
+        else
+            cdto_path = cmd[1];
     }
-    // free(home_path);
+    if (cdto_path != NULL && chdir(cdto_path) == -1)
+	{
+		ft_putstr_fd("MyShell: cd: ", 2);
+		ft_putstr_fd(cdto_path, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+	}
 }
 //  check if it is builtin or not
 int is_builtin(char **cmd, t_mini minish)
