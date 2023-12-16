@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/13 21:26:13 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/16 16:47:46 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,22 @@ char  **make_encpy(char **envp, t_mem_block *lst)
      envcpy[i] = NULL;
      return (envcpy);
 }
-
+// change it later to ft malloc for leaks
+t_list *fill_envlst(char **envp)
+{
+    int i;
+    t_list *envlst;
+    
+    i = 1;
+    envlst = ft_lstnew(envp[0]);
+    // printf("content of the first lst = %s\n", envlst->content);
+    while(envp[i])
+    {
+        ft_lstadd_back(&envlst, ft_lstnew(envp[i]));
+        i++;
+    }
+    return (envlst);
+}
 int	main(int argc, char **argv, char **envp)
 {
     char *input;
@@ -90,6 +105,21 @@ int	main(int argc, char **argv, char **envp)
     // init struct idk how many things
     t_mini minish;
     minish.env = envp;
+    minish.envlst = fill_envlst(envp);
+    /*printing stuff only*/
+    /*printing stuff only*/
+    /*printing stuff only*/
+                // t_list *current = minish.envlst;
+
+                // while (current != NULL) 
+                // {
+                //     printf("%s\n", current->content);
+                //     current = current->next;
+                // }
+    /*printing stuff only*/
+    /*printing stuff only*/
+    /*printing stuff only*/
+
     // system("leaks minishell");
     (void)argv;
     

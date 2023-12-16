@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 21:56:08 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/14 22:49:04 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/16 16:47:34 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,21 @@ void ft_cd(char **cmd, t_mini minish)
 		ft_putstr_fd(": No such file or directory\n", 2);
 	}
 }
+// env for env lol
+void ft_env(t_mini minish)
+{
+    t_list *current;
+    
+    current = minish.envlst;
+    while (current != NULL) 
+    {
+        ft_putendl_fd(current->content, 1);
+        current = current->next;
+    }
+}
+
+
+
 //  check if it is builtin or not
 int is_builtin(char **cmd, t_mini minish)
 {
@@ -177,11 +192,17 @@ int is_builtin(char **cmd, t_mini minish)
             ft_cd(cmd, minish);
             return (0);
         }
-    // else if (ft_strcmp(cmd, "export") == 0)
-    //     return 1;
+    else if (ft_strncmp(cmd[0], "env", 3) == 0)
+        {
+            ft_env(minish);
+            return (0);
+        }
+    else if (ft_strncmp(cmd[0], "export", 6) == 0)
+        {
+            ft_export(cmd, minish); // linked list
+            return (0);
+        }
     // else if (ft_strcmp(cmd, "unset") == 0)
-    //     return 1;
-    // else if (ft_strcmp(cmd, "env") == 0)
     //     return 1;
     // else if (ft_strcmp(cmd, "exit") == 0)
     //     return 1;
