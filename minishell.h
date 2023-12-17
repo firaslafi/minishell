@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:24 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/16 16:48:29 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/17 19:09:36 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,6 @@ char	*ft_strdup_s(const char *s, t_mem_block **lst);
 int     is_builtin(char **cmd, t_mini minish);
 void ft_export(char **cmd, t_mini minish);
 void ft_env(t_mini minish);
+int find_value(char *str);
+void ft_unset(char **cmd, t_mini minish);
 #endif

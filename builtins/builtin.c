@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 21:56:08 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/16 16:47:34 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/17 19:51:54 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,7 @@ int is_builtin(char **cmd, t_mini minish)
 {
     if (ft_strncmp(cmd[0], "echo", 4) == 0)
     {
-        ft_echo(cmd);
+        ft_echo(cmd); // i need to do the env variables
         return (0);
     }
     else if (ft_strncmp(cmd[0], "pwd", 3) == 0)
@@ -199,19 +199,17 @@ int is_builtin(char **cmd, t_mini minish)
         }
     else if (ft_strncmp(cmd[0], "export", 6) == 0)
         {
-            ft_export(cmd, minish); // linked list
+            ft_export(cmd, minish);
             return (0);
         }
-    // else if (ft_strcmp(cmd, "unset") == 0)
-    //     return 1;
-    // else if (ft_strcmp(cmd, "exit") == 0)
-    //     return 1;
+    else if (ft_strncmp(cmd[0], "unset", 5) == 0)
+        {
+            ft_unset(cmd, minish);
+            return (0);
+        }
+    else if (ft_strcmp(cmd, "exit") == 0)
+        exit(0); // verify the exit thingy
     else
         return 1;
 }
 
-
-// funct for all bultins
-//  if else statement for if cd pwd echo export
-// relative or absolute path /bin/ls or ls
-// if str[0] == / then verify path else i need to find the path for ls

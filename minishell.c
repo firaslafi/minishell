@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/16 16:47:46 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/17 19:52:41 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,19 +107,7 @@ int	main(int argc, char **argv, char **envp)
     minish.env = envp;
     minish.envlst = fill_envlst(envp);
     minish.exp_flag = 0;
-    /*printing stuff only*/
-    /*printing stuff only*/
-    /*printing stuff only*/
-                // t_list *current = minish.envlst;
 
-                // while (current != NULL) 
-                // {
-                //     printf("%s\n", current->content);
-                //     current = current->next;
-                // }
-    /*printing stuff only*/
-    /*printing stuff only*/
-    /*printing stuff only*/
 
     // system("leaks minishell");
     (void)argv;
@@ -133,9 +121,6 @@ int	main(int argc, char **argv, char **envp)
     char **envcpy = make_encpy(envp, lst);
     
     (void)envcpy;
-
-    // (void)envp;
-    // (void)lst;
 
     while (1) 
     {
@@ -162,11 +147,7 @@ int	main(int argc, char **argv, char **envp)
     }
 
     ft_free_all(&lst);
-    
-    // system("leaks minishell");
-    
-    // printf("PATH : %s\n", getenv("PATH"));
-    // printf("HOME : %s\n", getenv("HOME"));
-    // printf("ROOT : %s\n", getenv("ROOT"));
+
+
     return(0);
 }
