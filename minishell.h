@@ -44,6 +44,7 @@ typedef struct	s_mini
     char **env;
     t_list *envlst;
     char *pwd;
+    int exp_flag;
 } t_mini;
 
 

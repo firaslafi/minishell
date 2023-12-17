@@ -80,7 +80,52 @@ char *remove_qt(char *str)
     str[j] = '\0';
     return(str);
 }
-// if exists append it , last feature to implement
+char *doexp_format(char *var_value, char *var_name)
+{
+    var_value = remove_qt(var_value);
+    var_name = ft_strjoin(var_name, "=");
+    var_name = ft_strjoin(var_name, "\"");
+    var_name = ft_strjoin(var_name, var_value);
+    var_name = ft_strjoin(var_name, "\"");
+    return (var_name);
+}
+// if exists replace it or vice versa
+int check_exist_export(int pos, char *var_name, char *var_value, t_mini minish)
+{
+    t_list *current;
+    
+    (void)pos;
+    current = minish.envlst;
+    while (current)
+    {
+        if (ft_strncmp(var_name, current->content, ft_strlen(var_name)) == 0)
+            {
+                if (pos == -1)
+                    {
+                        current->content = var_name;
+                        return (0);
+                    }
+                current->content = doexp_format(var_value, var_name);
+                return (0);
+                break;
+            }
+        current = current->next;
+    }
+    return (1);
+}
+
+
+void add_or_replace(int pos, t_mini minish, char *var_name, char *var_value)
+{
+    if (check_exist_export(pos, var_name, var_value, minish) == 0)
+        return;
+    if (pos == -1)
+        ft_lstadd_back(&minish.envlst, ft_lstnew(remove_qt(var_name)));
+    else
+    {
+        ft_lstadd_back(&minish.envlst, ft_lstnew(doexp_format(var_value, var_name)));
+    }
+}
 void ft_export(char **cmd, t_mini minish)
 {
     int i;
@@ -103,21 +148,9 @@ void ft_export(char **cmd, t_mini minish)
         // verify the allocaiton how its made and change it
         var_name = ft_substr(cmd[i], 0, find_value(cmd[i]));
         // seprate func
- 
         int pos = find_value(cmd[i]);
         var_value = ft_substr(cmd[i], pos + 1, ft_strlen(cmd[i]) - pos - 1);
-        if (pos == -1)
-            ft_lstadd_back(&minish.envlst, ft_lstnew(remove_qt(var_name)));
-        else
-        {
-            var_value = remove_qt(var_value);
-            var_name = ft_strjoin(var_name, "=");
-            var_name = ft_strjoin(var_name, "\"");
-            var_name = ft_strjoin(var_name, var_value);
-            var_name = ft_strjoin(var_name, "\"");
-            ft_lstadd_back(&minish.envlst, ft_lstnew(var_name));
-        }
-        printf("real value to add is  %s\n", var_name);
+        add_or_replace(pos, minish, var_name, var_value);
         i++;
     }
 }

@@ -106,6 +106,7 @@ int	main(int argc, char **argv, char **envp)
     t_mini minish;
     minish.env = envp;
     minish.envlst = fill_envlst(envp);
+    minish.exp_flag = 0;
     /*printing stuff only*/
     /*printing stuff only*/
     /*printing stuff only*/

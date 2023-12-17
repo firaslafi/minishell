@@ -68,4 +68,5 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 void				free_split(char **array);
 char	*ft_strcpy(char *dest, char *src);
+int	ft_strcmp(char *s1, char *s2);
 #endif

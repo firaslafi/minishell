@@ -26,8 +26,7 @@ LIB = -lreadline
 LIBFT = libft/libft.a
 CC = cc
 
-SRCS = minishell.c ./utils/garbage_collector.c ft_strdup_s.c ./builtins/builtin.c \
-	./builtins/export.c
+SRCS = minishell.c ./utils/garbage_collector.c ft_strdup_s.c ./builtins/builtin.c ./builtins/export.c
 OBJS = $(SRCS:.c=.o)
 
 
