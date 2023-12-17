@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 21:56:08 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/17 19:51:54 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/17 22:19:19 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,7 +207,7 @@ int is_builtin(char **cmd, t_mini minish)
             ft_unset(cmd, minish);
             return (0);
         }
-    else if (ft_strcmp(cmd, "exit") == 0)
+    else if (ft_strncmp(cmd[0], "exit", 4) == 0)
         exit(0); // verify the exit thingy
     else
         return 1;

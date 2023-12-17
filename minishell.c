@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/17 19:52:41 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/17 22:25:14 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,6 @@ int	main(int argc, char **argv, char **envp)
     }
     //  testing here
     char **envcpy = make_encpy(envp, lst);
-    
     (void)envcpy;
 
     while (1) 
