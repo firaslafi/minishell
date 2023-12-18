@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:24 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/17 19:09:36 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/18 19:37:57 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_historylist
 {
     char			 *command;
     struct s_historylist *next;
+    int id;
 } t_historylist;
 
 typedef struct	s_mini
@@ -58,4 +59,5 @@ void ft_export(char **cmd, t_mini minish);
 void ft_env(t_mini minish);
 int find_value(char *str);
 void ft_unset(char **cmd, t_mini minish);
+void printf_hst(t_historylist *history);
 #endif

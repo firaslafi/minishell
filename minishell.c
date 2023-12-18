@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/17 22:25:14 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/18 19:53:49 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,37 @@
 // exit(1);
 // envpp.env = function_duplication(env);
 // t_glob envpp;
+t_historylist	*ft_hstlast(t_historylist *lst)
+{
+	while (lst)
+	{
+		if (!lst->next)
+			return (lst);
+		lst = lst->next;
+	}
+	return (lst);
+}
+void	ft_addhst_back(t_historylist **history, t_historylist *new)
+{
+	t_historylist	*last;
 
+	if (history)
+	{
+		if (*history)
+		{
+			last = ft_hstlast(*history);
+			last->next = new;
+		}
+		else
+			*history = new;
+	}
+}
 void add_history_front(t_historylist **history, t_historylist *newEntry)
 {
     // Add the entry to the front of the list
-    newEntry->next = *history;
-    *history = newEntry;
+    ft_addhst_back(history, newEntry);
+    // newEntry->next = *history;
+    // *history = newEntry;
 
 }
 
@@ -44,14 +69,17 @@ void ft_add_history(const char *command, t_historylist **history, t_mem_block **
     add_history_front(history, newEntry);
 }
     // t_historylist *history = NULL;
-        // t_historylist *current = history;
-
-        // printf("History:\n");
-        //     while (current != NULL)
-        //     {
-        //         printf("%d: %s\n", index++, current->command);
-        //         current = current->next;
-        //     }
+void printf_hst(t_historylist *history)
+{
+    int index = 0;
+    t_historylist *current = history;
+    while (current != NULL)
+    {
+        printf("%d %s\n", index++, current->command);
+        current = current->next;
+    }
+}
+    
 // call ft_add_history(input, &history, &lst);
 /* above is pointless*//* above is pointless*/
 /* above is pointless*//* above is pointless*/
@@ -195,7 +223,7 @@ int	main(int argc, char **argv, char **envp)
     char *input;
     t_mem_block *lst = NULL;
     char **token;
-    
+    t_historylist *history = NULL;
     // init struct idk how many things
     t_mini minish;
     minish.env = envp;
@@ -225,14 +253,17 @@ int	main(int argc, char **argv, char **envp)
         {
             add_history(input);
             token = history_tokenize(input);
-    
+            ft_add_history(input, &history, &lst);
             free(input);
             if (token != NULL && *token != NULL)
             {
 
                 // printf("cmd = %s\n", *token);
                 is_builtin(token, minish);
-                run_cmd(token);
+                // run_cmd(token); *******
+                
+                if (ft_strncmp(token[0], "history", 7) == 0)
+                    printf_hst(history);
                 free(token);
             } else if (token != NULL) {
                 free(token); // Free memory for an empty token
