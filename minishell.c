@@ -96,6 +96,100 @@ t_list *fill_envlst(char **envp)
     }
     return (envlst);
 }
+/*pipex*//*pipex*//*pipex*//*pipex*//*pipex*//*pipex*//*pipex*/
+// checking for excuting permissions and return path
+char	*ft_check_x(char **array, char **cmd1)
+{
+	int		i;
+	char	*path;
+
+	path = NULL;
+	i = 0;
+	while (array[i])
+	{
+		array[i] = ft_strjoin(array[i], "/");
+		array[i] = ft_strjoin(array[i], *cmd1);
+		if (access(array[i], X_OK) == 0)
+		{
+			path = array[i];
+			break ;
+		}
+		else
+			i++;
+	}
+	if (!path)
+		{
+            // ft_error("no path");
+            printf("no path");
+        }
+	return (path);
+}
+// i need to verify what kind of  data i will be getting
+// and then work on the run cmd properly then run the pipes
+void run_cmd(char **cmd)
+{
+
+    char **array = ft_split(getenv("PATH"), ':');
+    char *path = ft_check_x(array, cmd);
+	char	**args;
+    char *argslst = ft_strdup("");
+    int i = 1;
+    while (cmd[i])
+    {
+        argslst = ft_strjoin(argslst, cmd[i]);
+        argslst = ft_strjoin(argslst, " ");
+        i++;
+    }
+    printf("cmds = %s\n", argslst);
+	args = ft_split(argslst, ' ');
+    execve(path, args, NULL);
+    printf("%s", path);
+    printf("\n");
+}
+// void    run_pipes(int fd[2], char **commands, int n)
+// {
+//     int         i;
+//     int         pid;
+//     int         status;
+//     int         in_fd;
+//     i = 0;
+//     in_fd = 0;
+//     while (i < n)
+//     {
+//         if (i < n - 1)
+//             pipe(fd);
+//         pid = fork();
+//         if (pid == 0)
+//         {
+            // if (in_fd != 0)
+            // {
+            //     dup2(in_fd, 0);
+            //     close(in_fd);
+            // }
+            // if (i < n - 1)
+            // {
+            //     close(fd[0]);
+            //     dup2(fd[1], 1);
+            //     close(fd[1]);
+            // }
+            // // run(commands[i]);
+            // exit(EXIT_FAILURE);
+        // }
+//         else
+//         {
+//             if (in_fd != 0)
+//                 close(in_fd);
+//             if (i < n - 1)
+//             {
+//                 close(fd[1]);
+//                 in_fd = fd[0];
+//             }
+//             waitpid(pid, &status, 0);
+//         }
+//         i++;
+//     }
+// }
+/*pipex*//*pipex*//*pipex*//*pipex*//*pipex*//*pipex*//*pipex*/
 int	main(int argc, char **argv, char **envp)
 {
     char *input;
@@ -120,7 +214,7 @@ int	main(int argc, char **argv, char **envp)
     //  testing here
     char **envcpy = make_encpy(envp, lst);
     (void)envcpy;
-
+     
     while (1) 
     {
         input = readline(ANSI_COLOR_GREEN"MyShell$ " ANSI_COLOR_RESET);
@@ -131,11 +225,14 @@ int	main(int argc, char **argv, char **envp)
         {
             add_history(input);
             token = history_tokenize(input);
+    
             free(input);
             if (token != NULL && *token != NULL)
             {
+
                 // printf("cmd = %s\n", *token);
                 is_builtin(token, minish);
+                run_cmd(token);
                 free(token);
             } else if (token != NULL) {
                 free(token); // Free memory for an empty token
