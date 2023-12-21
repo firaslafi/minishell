@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 17:26:52 by flafi             #+#    #+#             */
-/*   Updated: 2023/10/12 20:57:01 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/21 19:36:14 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char	**ft_split(char const *s, char c)
 	char	*chr;
 	char	**ptr;
 	int		wc;
-
+	
 	chr = NULL;
 	if (!s)
 		return (NULL);

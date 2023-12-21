@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/18 19:53:49 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/21 19:53:11 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ char	*ft_check_x(char **array, char **cmd1)
 }
 // i need to verify what kind of  data i will be getting
 // and then work on the run cmd properly then run the pipes
-void run_cmd(char **cmd)
+void run_cmd(char **cmd, char **envp)
 {
 
     char **array = ft_split(getenv("PATH"), ':');
@@ -168,11 +168,10 @@ void run_cmd(char **cmd)
         argslst = ft_strjoin(argslst, " ");
         i++;
     }
-    printf("cmds = %s\n", argslst);
 	args = ft_split(argslst, ' ');
-    execve(path, args, NULL);
-    printf("%s", path);
-    printf("\n");
+    printf("path = %s\n", path);
+    printf("arglst = %s\n", argslst);
+    execve(path, args, envp);
 }
 // void    run_pipes(int fd[2], char **commands, int n)
 // {
@@ -259,8 +258,11 @@ int	main(int argc, char **argv, char **envp)
             {
 
                 // printf("cmd = %s\n", *token);
-                is_builtin(token, minish);
-                // run_cmd(token); *******
+                // char *vv[] = {"", NULL};
+                // execve("/usr/bin/uname", vv, envp);
+                if (is_builtin(token, minish) == 0);
+                else 
+                    run_cmd(token, envp); 
                 
                 if (ft_strncmp(token[0], "history", 7) == 0)
                     printf_hst(history);
