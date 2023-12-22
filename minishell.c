@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/21 19:53:11 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/22 23:20:11 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,12 +154,13 @@ char	*ft_check_x(char **array, char **cmd1)
 }
 // i need to verify what kind of  data i will be getting
 // and then work on the run cmd properly then run the pipes
-void run_cmd(char **cmd, char **envp)
+// , char **envp
+void run_cmd(char **cmd)
 {
 
     char **array = ft_split(getenv("PATH"), ':');
     char *path = ft_check_x(array, cmd);
-	char	**args;
+	char	**args = NULL;
     char *argslst = ft_strdup("");
     int i = 1;
     while (cmd[i])
@@ -168,54 +169,62 @@ void run_cmd(char **cmd, char **envp)
         argslst = ft_strjoin(argslst, " ");
         i++;
     }
-	args = ft_split(argslst, ' ');
-    printf("path = %s\n", path);
-    printf("arglst = %s\n", argslst);
-    execve(path, args, envp);
+    if (*argslst != '\0')
+	    args = ft_split(argslst, ' ');
+    else
+        {
+            // memory issue here
+            args = malloc(1 * sizeof(char *));
+            args[0] = ft_strdup("");
+        }
+    // printf("path = %s\n", path);
+    // printf("arglst = %s\n", argslst);
+    // fix ENVP 111!!!!
+    execve(path, args, NULL);
 }
-// void    run_pipes(int fd[2], char **commands, int n)
-// {
-//     int         i;
-//     int         pid;
-//     int         status;
-//     int         in_fd;
-//     i = 0;
-//     in_fd = 0;
-//     while (i < n)
-//     {
-//         if (i < n - 1)
-//             pipe(fd);
-//         pid = fork();
-//         if (pid == 0)
-//         {
-            // if (in_fd != 0)
-            // {
-            //     dup2(in_fd, 0);
-            //     close(in_fd);
-            // }
-            // if (i < n - 1)
-            // {
-            //     close(fd[0]);
-            //     dup2(fd[1], 1);
-            //     close(fd[1]);
-            // }
-            // // run(commands[i]);
-            // exit(EXIT_FAILURE);
-        // }
-//         else
-//         {
-//             if (in_fd != 0)
-//                 close(in_fd);
-//             if (i < n - 1)
-//             {
-//                 close(fd[1]);
-//                 in_fd = fd[0];
-//             }
-//             waitpid(pid, &status, 0);
-//         }
-//         i++;
-//     }
-// }
+void    run_pipes(int fd[2], char **commands, int n)
+{
+    int         i;
+    int         pid;
+    int         status;
+    int         in_fd;
+    i = 0;
+    in_fd = 0;
+    while (i < n)
+    {
+        if (i < n - 1)
+            pipe(fd);
+        pid = fork();
+        if (pid == 0)
+        {
+            if (in_fd != 0)
+            {
+                dup2(in_fd, 0);
+                close(in_fd);
+            }
+            if (i < n - 1)
+            {
+                close(fd[0]);
+                dup2(fd[1], 1);
+                close(fd[1]);
+            }
+            run_cmd(commands);
+            exit(EXIT_FAILURE);
+        }
+        else
+        {
+            if (in_fd != 0)
+                close(in_fd);
+            if (i < n - 1)
+            {
+                close(fd[1]);
+                in_fd = fd[0];
+            }
+            waitpid(pid, &status, 0);
+        }
+        i++;
+    }
+}
 /*pipex*//*pipex*//*pipex*//*pipex*//*pipex*//*pipex*//*pipex*/
 // sigs
 void    signal_interrupt(int sig)
@@ -240,10 +249,26 @@ void    sigs(void)
     // rl_clear_signals();
 }
 // sigs
+// pipes
+void create_pipes(int pipes[][2], int num_pipes) 
+{
+    int i = 0;
+    while (i < num_pipes) {
+        if (pipe(pipes[i]) == -1) {
+            perror("Pipe creation failed");
+            exit(EXIT_FAILURE);
+        }
+        i++;
+    }
+}
+// pipes
 
 // to doS:
-// fix the exucution on macOS
 // heredoc creating
+void heredoc()
+{
+    
+}
 // look for env variables and change them in the print of intereption
 int	main(int argc, char **argv, char **envp)
 {
@@ -267,6 +292,8 @@ int	main(int argc, char **argv, char **envp)
         exit(1);
     }
     //  testing here
+    // int pipes[2][2];
+    
     char **envcpy = make_encpy(envp, lst);
     (void)envcpy;
     sigs();
@@ -289,11 +316,15 @@ int	main(int argc, char **argv, char **envp)
                 // char *vv[] = {"", NULL};
                 // execve("/usr/bin/uname", vv, envp);
                 if (is_builtin(token, minish) == 0);
-                else 
-                    run_cmd(token, envp); 
-                
-                if (ft_strncmp(token[0], "history", 7) == 0)
+                    
+                else if (ft_strncmp(token[0], "history", 7) == 0)
                     printf_hst(history);
+                // else 
+                //    {
+                //     create_pipes(pipes, 2);
+                //     run_pipes(pipes[0] ,token, 2);
+                //    } 
+                
                 free(token);
             } else if (token != NULL) {
                 free(token); // Free memory for an empty token

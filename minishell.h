@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:24 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/18 19:37:57 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/22 18:52:51 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define ANSI_COLOR_BLUE "\x1b[34m"
 # define ANSI_COLOR_RESET "\x1b[0m"
 
-struct sigaction g_sign = NULL;
+struct sigaction g_sign;
 
 typedef struct mem_block
 {
