@@ -217,6 +217,34 @@ void run_cmd(char **cmd, char **envp)
 //     }
 // }
 /*pipex*//*pipex*//*pipex*//*pipex*//*pipex*//*pipex*//*pipex*/
+// sigs
+void    signal_interrupt(int sig)
+{
+    if (sig == SIGINT)
+    {
+        rl_replace_line("", 0);
+        printf("\n");
+        rl_on_new_line();
+        rl_redisplay();
+    }
+    else if (sig == SIGQUIT)
+        exit(EXIT_SUCCESS);
+}
+void    sigs(void)
+{
+    // rl_catch_signals = 0;
+    g_sign.sa_handler = signal_interrupt;
+    g_sign.sa_flags = 0;
+    sigaction(SIGINT, &g_sign, NULL);
+    sigaction(SIGQUIT, &g_sign, NULL);
+    // rl_clear_signals();
+}
+// sigs
+
+// to doS:
+// fix the exucution on macOS
+// heredoc creating
+// look for env variables and change them in the print of intereption
 int	main(int argc, char **argv, char **envp)
 {
     char *input;
@@ -241,7 +269,7 @@ int	main(int argc, char **argv, char **envp)
     //  testing here
     char **envcpy = make_encpy(envp, lst);
     (void)envcpy;
-     
+    sigs();
     while (1) 
     {
         input = readline(ANSI_COLOR_GREEN"MyShell$ " ANSI_COLOR_RESET);
