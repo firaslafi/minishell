@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/22 23:20:11 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/24 20:59:21 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,32 +155,39 @@ char	*ft_check_x(char **array, char **cmd1)
 // i need to verify what kind of  data i will be getting
 // and then work on the run cmd properly then run the pipes
 // , char **envp
+// i need to accepts **args
 void run_cmd(char **cmd)
 {
-
+    
     char **array = ft_split(getenv("PATH"), ':');
     char *path = ft_check_x(array, cmd);
-	char	**args = NULL;
+	char	**args = NULL;  
     char *argslst = ft_strdup("");
     int i = 1;
     while (cmd[i])
     {
         argslst = ft_strjoin(argslst, cmd[i]);
-        argslst = ft_strjoin(argslst, " ");
+        if (cmd[i + 1])
+            argslst = ft_strjoin(argslst, " ");
         i++;
     }
-    if (*argslst != '\0')
-	    args = ft_split(argslst, ' ');
+    if (ft_strlen(argslst) > 1)
+    {
+        // printf("args =  %s\n", argslst);
+        args = ft_split(argslst, ' ');
+    }
     else
-        {
-            // memory issue here
-            args = malloc(1 * sizeof(char *));
-            args[0] = ft_strdup("");
-        }
-    // printf("path = %s\n", path);
-    // printf("arglst = %s\n", argslst);
+    {
+        // memory issue here
+        args = malloc(1 * sizeof(char *));
+        args[0] = ft_strdup("");
+    }
+    printf("path = %s\n", path);
+    printf("arglst = %s\n", argslst);
     // fix ENVP 111!!!!
-    execve(path, args, NULL);
+    // this is for tesitngs
+    char *argsv[] = { "uname", "-a", NULL };
+    execve(path, argsv, NULL);
 }
 void    run_pipes(int fd[2], char **commands, int n)
 {
@@ -265,10 +272,81 @@ void create_pipes(int pipes[][2], int num_pipes)
 
 // to doS:
 // heredoc creating
-void heredoc()
-{
+// void heredoc()
+// {
     
+// }
+
+// strchr for token 2d
+int ft_strchr_2d(char **array)
+{
+    int i;
+    
+    i = 0;
+    
+    while (array[i])
+    {
+        if (ft_strchr(array[i], '$')!= NULL)
+            return (1);
+        i++;
+    }
+    return (0);
 }
+
+// check if exists 
+int check_exist_envp(char *var_name, t_mini minish)
+{
+    t_list *current;
+    
+    current = minish.envlst;
+    var_name++;
+    while (current)
+    {
+        if (ft_strncmp(var_name, current->content, ft_strlen(var_name)) == 0)
+            {
+                char *lol = ft_substr(current->content, ft_strlen(var_name) + 2, ft_strlen(current->content) - ft_strlen(var_name));
+                printf("%s", lol);
+                free(lol);
+                // break;
+                return (0);
+            }
+        current = current->next;
+    }
+    return (1);
+}
+
+void handle_dolla(t_mini *minish, char **token)
+{
+    int i;
+    int j;
+    (void)minish;
+    j = 0;
+    i = 0;
+    while (token[i])
+    {
+        if (ft_strchr(token[i], '$')!= NULL)
+        {
+            while(token[i][j])
+            {
+                if(token[i][j] == '$' && token[i][j + 1] && token[i][j + 1] == '$')
+                    {
+                        printf("%i", getpid());
+                        j++;
+                    }
+                else
+                    {
+                        check_exist_envp(token[i], *minish);
+                        j++;
+                    }
+                j++;
+            }
+            j = 0;
+        }
+        i++;
+    }
+    // printf("MyShell : %i\n", minish->rtn_code);
+}
+
 // look for env variables and change them in the print of intereption
 int	main(int argc, char **argv, char **envp)
 {
@@ -281,8 +359,8 @@ int	main(int argc, char **argv, char **envp)
     minish.env = envp;
     minish.envlst = fill_envlst(envp);
     minish.exp_flag = 0;
-
-
+    minish.rtn_code = 0;
+    
     // system("leaks minishell");
     (void)argv;
     
@@ -319,11 +397,18 @@ int	main(int argc, char **argv, char **envp)
                     
                 else if (ft_strncmp(token[0], "history", 7) == 0)
                     printf_hst(history);
-                // else 
-                //    {
-                //     create_pipes(pipes, 2);
-                //     run_pipes(pipes[0] ,token, 2);
-                //    } 
+                else if (ft_strchr_2d(token) == 1)
+                    {
+                        // fill the commands withteh code an the failed one with their appropriate 
+                        handle_dolla(&minish, token);
+                    }
+                else
+                   {
+                    // handle excution with absolute and relative path
+                    // create_pipes(pipes, 2);
+                    // run_pipes(pipes[0] ,token, 2);
+                    run_cmd(token);
+                   } 
                 
                 free(token);
             } else if (token != NULL) {

@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 21:56:08 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/18 19:40:02 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/23 18:43:15 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,7 @@ void ft_env(t_mini minish)
         ft_putendl_fd(current->content, 1);
         current = current->next;
     }
+    minish.rtn_code = 0;
 }
 
 

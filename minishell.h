@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:24 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/22 18:52:51 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/23 18:35:06 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct	s_mini
     t_list *envlst;
     char *pwd;
     int exp_flag;
+    int rtn_code;
 } t_mini;
 
 
