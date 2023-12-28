@@ -6,7 +6,7 @@
 /*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 22:44:04 by mbelhaj-          #+#    #+#             */
-/*   Updated: 2023/12/14 22:47:22 by mbelhaj-         ###   ########.fr       */
+/*   Updated: 2023/12/16 02:28:32 by mbelhaj-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,23 @@ int	ft_double_qoute(char *c)
 	if (doubl > 0 && doubl % 2 != 0)
 		return (0);
 	return (1);
+}
+
+int	ft_quotes_both(char *str, int i)
+{
+	int		j;
+	char	quote;
+
+	j = 0;
+	if (str[i + j] == 34 || str[i + j] == 39)
+	{
+		quote = str[i + j];
+		j++;
+		while (str[i + j] != quote && str[i + j])
+		{
+			j++;
+		}
+		j++;
+	}
+	return (j);
 }

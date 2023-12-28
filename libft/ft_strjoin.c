@@ -6,7 +6,7 @@
 /*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 03:26:48 by mbelhaj-          #+#    #+#             */
-/*   Updated: 2023/08/12 14:30:45 by mbelhaj-         ###   ########.fr       */
+/*   Updated: 2023/12/26 22:22:39 by mbelhaj-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*ft_strjoin_gnl(char *s1, char *s2)
 		str[gnl.y] = s2[gnl.y - gnl.len1];
 		gnl.y++;
 	}
-	str[gnl.y] = '\0';
+	str[gnl.y] = '\0';	
 	free(s1);
 	return (str);
 }

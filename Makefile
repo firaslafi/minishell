@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+         #
+#    By: flafi <flafi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/01 16:40:23 by flafi             #+#    #+#              #
-#    Updated: 2023/12/14 22:47:06 by mbelhaj-         ###   ########.fr        #
+#    Updated: 2023/12/28 02:39:08 by flafi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ WHITE = \033[0;97m
 
 .SILENT:
 NAME = minishell
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS =
 CC = gcc
 
 LIBFT_DIR = ./libft
@@ -32,7 +32,20 @@ LIBFT_INC = -I$(LIBFT_DIR)
 READLINE_INC = -I /usr/include/readline
 READLINE_LIB = -lreadline -lhistory
 
-SRCS = minishell.c ./utils/garbage_collector.c ./parse/ft_quote.c
+SRCS = minishell.c ./utils/garbage_collector.c ./init/ft_quote.c\
+./init/ft_handle_token.c\
+./init/ft_add_lex.c\
+./pipex/pipex.c\
+./pipex/pipex_utils.c\
+./get_envp/ft_strdup_s.c\
+./get_envp/ft_history.c\
+./get_envp/sigs.c\
+./builtins/builtin.c\
+./builtins/export.c\
+./builtins/unset.c\
+
+
+
 OBJS = $(SRCS:.c=.o)
 
 $(NAME): $(OBJS) $(LIBFT)
@@ -44,10 +57,12 @@ all: $(NAME)
 clean:
 	rm -f $(OBJS)
 	echo "$(RED)Object Files are deleted$(DEF_COLOR)"
+	make -C $(LIBFT_DIR) clean
 
 fclean: clean
 	rm -rf $(NAME)
 	echo "$(RED)Everything is clean$(DEF_COLOR)"
+	make -C $(LIBFT_DIR) fclean
 
 re: fclean all
 
