@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/28 06:15:01 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/28 06:18:54 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,7 +241,7 @@ void	ft_parsing(t_lex *list, t_cmd *cmd, char **envp)
 	k = 0;
 	while (k < i + 1)
 	{
-		printf("AAAAAAAAAAA %s\n", cmd->final_cmd[k]);
+		printf("AAAAAAAaAAAA %s\n", cmd->final_cmd[k]);
 		k++;
 	}
 	// execute_command(cmd,envp);
