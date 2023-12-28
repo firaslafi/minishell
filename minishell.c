@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/28 05:35:22 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/28 06:15:01 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,49 +191,62 @@ int	ft_check_red(int index)
 		return (0);
 }
 
-void    ft_parsing(t_lex *list, t_cmd *cmd, char **envp)
+void	ft_parsing(t_lex *list, t_cmd *cmd, char **envp)
 {
-    int   i;
-    int   j;
-    int   k;
-    char  *cmd_str;
+	int	i;
+	int	j;
+	int	k;
 
-    i = -1;
-    j = 0;
-    k = 0;
-    while (list)
-    {
-        if (!list->str)
-        {
-            if (ft_check_red(list->token) == 4)
-            {
-                cmd->input = list->str;
-            }
-            else if (ft_check_red(list->token) == 2)
-            {
-                cmd->output = list->str;
-            }
-            list = list->next;
-        }
-        else
-        {
-            cmd_str = NULL;
-            while (list && list->str)
-            {
-                if (cmd_str)
-                {
-                    cmd_str = ft_strjoin(cmd_str, " ");
-                }
-                cmd_str = ft_strjoin(cmd_str, list->str);
-                cmd->final_arg[j] = list->str;
-                list = list->next;
-                j++;
-            }
-            cmd->final_cmd[++i] = cmd_str;
-            // printf("----------> %s\n", cmd->final_cmd[k]);
-            k++;
-        }
-    }
+	i = -1;
+	j = 0;
+	while (list != NULL)
+	{
+		if (list->str == NULL)
+		{
+			if (ft_check_red(list->token) == 4)
+			{
+				list = list->next;
+				cmd->input = ft_strdup(list->str);
+				list = list->next;
+			}
+			else if (ft_check_red(list->token) == 2)
+			{
+				list = list->next;
+				cmd->output = ft_strdup(list->str);
+				list = list->next;
+			}
+			else
+				list = list->next;
+		}
+		else
+		{
+			i++;
+			cmd->final_cmd[i] = ft_strdup(list->str);
+			printf("new cmd %s\n", cmd->final_cmd[i]);
+			list = list->next;
+			while (list != NULL && list->str != NULL)
+			{
+				cmd->final_arg[j] = ft_strdup(list->str);
+				cmd->final_cmd[i] = ft_strjoin(cmd->final_cmd[i], " ");
+				cmd->final_cmd[i] = ft_strjoin(cmd->final_cmd[i],
+					cmd->final_arg[j]);
+				printf("full CMD number %i = %s\n", i, cmd->final_cmd[i]);
+				j++;
+				list = list->next;
+			}
+		}
+	}
+	printf("input  = %s\n", cmd->input);
+	printf("OUTPUT  = %s\n", cmd->output);
+	k = 0;
+	while (k < i + 1)
+	{
+		printf("AAAAAAAAAAA %s\n", cmd->final_cmd[k]);
+		k++;
+	}
+	// execute_command(cmd,envp);
+	pipex(cmd->final_cmd,envp,k);
+	// free_cmd_structure(cmd, k, j);
 }
 
 void	print_list(t_lex *list)
