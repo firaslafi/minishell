@@ -1,4 +1,0 @@
-hell
-test
-text.txt
-v1

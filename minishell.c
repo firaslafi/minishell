@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/28 06:18:54 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/29 05:40:51 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ char	*ft_cmd(t_cmd_inf *c)
 
 	// firas
 	input = readline(ANSI_COLOR_GREEN "MyShell$ " ANSI_COLOR_RESET);
-	token = ft_split(input, ' ');
 	if (input == NULL)
 		return (NULL); // Exit the loop if input is NULL (EOF or error)
 	if (input[0] != '\0')
 	{
+	    token = ft_split(input, ' ');
 		add_history(input);
 		token = history_tokenize(input);
 		ft_add_history(input, &c->history, &c->lst);
