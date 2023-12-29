@@ -1,1 +1,34 @@
-12345
+Executing command: ls
+Command path resolved: /bin/ls
+Makefile
+builtins
+fewfewf
+file1
+filex
+get_envp
+init
+libft
+minishell
+minishell.c
+minishell.h
+minishell.o
+parse
+pipex
+utils
+Executing command: ls
+Command path resolved: /bin/ls
+Makefile
+builtins
+fewfewf
+file1
+filex
+get_envp
+init
+libft
+minishell
+minishell.c
+minishell.h
+minishell.o
+parse
+pipex
+utils

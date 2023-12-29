@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:24 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/28 02:50:28 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/29 10:21:19 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,10 @@ typedef struct s_cmd
 	char  **final_arg;
 	char  *input;
 	char  *output;
+	char  *output_ap;
+	char *here_doc;
+	int flag_input;
+	int flag_output;
 	int   token;
 }						t_cmd;
 
@@ -137,7 +141,7 @@ char	*ft_getenv(const char *var_name, char **envp);
 char	*ft_path(char *pathToFind, char **envp);
 char	*ft_find(char *pathcopy, char **pathsegments, char *pathToFind);
 void	ft_execve(char *argv, char **envp);
-int	pipex(char **cmds, char **envp, int num_cmds);
+int	pipex(t_cmd *cmd, char **envp, int num_cmds,int index);
 
 
 // int pipex(char **cmds, char **envp);

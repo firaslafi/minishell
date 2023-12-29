@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 19:26:15 by mbelhaj-          #+#    #+#             */
-/*   Updated: 2023/12/29 06:25:08 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/29 11:08:08 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	ft_execve(char *argv, char **envp)
 	free_string_array(cmd);
 }
 
-int	pipex(char **cmds, char **envp, int num_cmds)
+int	pipex(t_cmd *cmds, char **envp, int num_cmds, int index)
 {
 	int		**fd;
 	pid_t	pid;
@@ -171,6 +171,7 @@ int	pipex(char **cmds, char **envp, int num_cmds)
             
             if (i == num_cmds - 1) 
             {
+
                 //  WE NEED TO PROTECT THE OPENING OF FDS !!!!
                 
                 // cmd->output
@@ -192,15 +193,78 @@ int	pipex(char **cmds, char **envp, int num_cmds)
                 // cmd->input
                 // int pip;
                 // pipe(pip);
-                int fd_ops = open("file1", O_RDONLY, 0644);
-                dup2(fd_ops, STDIN_FILENO);
-                close(fd_ops);
+                // int fd_ops = open("file1", O_RDONLY, 0644);
+                // dup2(fd_ops, STDIN_FILENO);
+                // close(fd_ops);
                 
                 // cat < blablablaHERE.txt | cat < test.xt
                 // cat
+
+                /********************* here_doc**************/
+                // if (cmds->here_doc != NULL)
+                // {
+        
+                //     char    *doc;
+                //     char    *limiter;
+                //     int     ipc[2];
+                    
+                //     printf("----------> 5%s \n",cmds->here_doc);
+                //     if (pipe(ipc))
+                //        return(0);   
+                //     limiter = ft_strjoin(cmds->here_doc,"\n");
+                //     doc = get_next_line(0);
+                //     while (doc && ft_strncmp(limiter, doc, ft_strlen(doc)))
+                //     {
+                //         ft_putstr_fd(doc, ipc[1]);
+                //         free(doc);
+                //         doc = get_next_line(0);
+                //     }
+                //     free(limiter);
+                //     if (doc)
+                //         free(doc);
+                //     dup2(ipc[0], 0);
+                //     close(ipc[0]);
+                //     close(ipc[1]);
+
+                // }
+                /********************* here_doc**************/
+                
+                if (cmds->flag_input == 1 && cmds->flag_output == 1)
+                {
+                    printf("----------> 1%s \n",cmds->here_doc);
+
+                    int fd_ops = open(cmds->input, O_RDONLY, 0644);
+                    int fd_op = open(cmds->output, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+					dup2(fd_ops, STDIN_FILENO);
+                	dup2(fd_op, STDOUT_FILENO);
+					close(fd_ops);
+                }
+				else if (index == 2)
+				{
+                    printf("----------> 2%s \n",cmds->here_doc);
+
+					int fd_op = open(cmds->output, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+                	dup2(fd_op, STDOUT_FILENO);
+				}
+				else if (index == 3)
+				{
+                    printf("----------> 3%s \n",cmds->here_doc);
+
+				 	int fd_op = open(cmds->output_ap, O_WRONLY | O_CREAT | O_APPEND, 0644);
+                	dup2(fd_op, STDOUT_FILENO);	
+				}
+				else if (index == 4)
+				{
+                    printf("----------> 4%s \n",cmds->here_doc);
+
+					int fd_ops = open(cmds->input, O_RDONLY, 0644);
+					dup2(fd_ops, STDIN_FILENO);
+					close(fd_ops);
+				}
+
             }
                 
-			ft_execve(cmds[i], envp);
+			ft_execve(cmds->final_cmd[i], envp);
 			exit(EXIT_FAILURE); // If execve fails, exit child with error code
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/29 05:40:51 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/29 10:35:27 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,23 +196,44 @@ void	ft_parsing(t_lex *list, t_cmd *cmd, char **envp)
 	int	i;
 	int	j;
 	int	k;
+    int index;
 
 	i = -1;
 	j = 0;
+    index = 0;
+    cmd->flag_input = 0;
 	while (list != NULL)
 	{
 		if (list->str == NULL)
 		{
-			if (ft_check_red(list->token) == 4)
-			{
-				list = list->next;
-				cmd->input = ft_strdup(list->str);
-				list = list->next;
-			}
-			else if (ft_check_red(list->token) == 2)
+		    if (ft_check_red(list->token) == 2)
 			{
 				list = list->next;
 				cmd->output = ft_strdup(list->str);
+                index = 2;
+                cmd->flag_output = 1;
+				list = list->next;
+			}
+            else if (ft_check_red(list->token) == 3)
+			{
+				list = list->next;
+				cmd->output_ap = ft_strdup(list->str);
+                index = 3;
+				list = list->next;
+			}
+            else if (ft_check_red(list->token) == 4)
+			{
+				list = list->next;
+				cmd->input = ft_strdup(list->str);
+                index = 4;
+                cmd->flag_input = 1;
+				list = list->next;
+			}
+            else if (ft_check_red(list->token) == 5)
+			{
+				list = list->next;
+				cmd->here_doc = ft_strdup(list->str);
+                index = 5;
 				list = list->next;
 			}
 			else
@@ -222,7 +243,7 @@ void	ft_parsing(t_lex *list, t_cmd *cmd, char **envp)
 		{
 			i++;
 			cmd->final_cmd[i] = ft_strdup(list->str);
-			printf("new cmd %s\n", cmd->final_cmd[i]);
+			// printf("new cmd %s\n", cmd->final_cmd[i]);
 			list = list->next;
 			while (list != NULL && list->str != NULL)
 			{
@@ -230,7 +251,7 @@ void	ft_parsing(t_lex *list, t_cmd *cmd, char **envp)
 				cmd->final_cmd[i] = ft_strjoin(cmd->final_cmd[i], " ");
 				cmd->final_cmd[i] = ft_strjoin(cmd->final_cmd[i],
 					cmd->final_arg[j]);
-				printf("full CMD number %i = %s\n", i, cmd->final_cmd[i]);
+				// printf("full CMD number %i = %s\n", i, cmd->final_cmd[i]);
 				j++;
 				list = list->next;
 			}
@@ -241,11 +262,11 @@ void	ft_parsing(t_lex *list, t_cmd *cmd, char **envp)
 	k = 0;
 	while (k < i + 1)
 	{
-		printf("AAAAAAAaAAAA %s\n", cmd->final_cmd[k]);
+		printf("CMD ----------->> %s\n", cmd->final_cmd[k]);
 		k++;
 	}
 	// execute_command(cmd,envp);
-	pipex(cmd->final_cmd,envp,k);
+	 pipex(cmd,envp,k,index);
 	// free_cmd_structure(cmd, k, j);
 }
 
