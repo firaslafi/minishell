@@ -6,7 +6,7 @@
 /*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/30 14:41:54 by mbelhaj-         ###   ########.fr       */
+/*   Updated: 2023/12/30 21:41:55 by mbelhaj-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,46 +65,11 @@ int	check_exist_envp(char *var_name, t_cmd_inf minish)
 	return (1);
 }
 
-// void	ft_get_input(t_lex *list, t_cmd *cmd, t_mem_block *lst)
-// {
-// 	if (list->token == 2)
-// 	{
-// 		list = list->next;
-// 		cmd->output = ft_strdup_s(list->str, &lst);
-// 		cmd->flags = ft_strjoin(cmd->flags, "G");
-// 		list = list->next;
-// 	}
-// 	else if (list->token == 3)
-// 	{
-// 		list = list->next;
-// 		cmd->output = ft_strdup_s(list->str, &lst);
-// 		cmd->flags = ft_strjoin(cmd->flags, "G_G");
-// 		list = list->next;
-// 	}
-// 	else if (list->token == 4)
-// 	{
-// 		list = list->next;
-// 		cmd->input = ft_strdup_s(list->str, &lst);
-// 		cmd->flags = ft_strjoin(cmd->flags, "L");
-// 		list = list->next;
-// 	}
-// 	else if (list->token == 5)
-// 	{
-// 		list = list->next;
-// 		cmd->here_doc = ft_strdup_s(list->str, &lst);
-// 		cmd->flags = ft_strjoin(cmd->flags, "L_L");
-// 		list = list->next;
-// 	}
-// 	else
-// 		list = list->next;
-// }
-
-void	ft_parsing(t_lex *list, t_cmd *cmd, char **envp, t_cmd_inf c)
+int	ft_get_input(t_lex *list, t_cmd *cmd, t_mem_block *lst)
 {
 	int			i;
 	int			j;
 	int			k;
-	t_mem_block	*lst;
 
 	lst = NULL;
 	i = -1;
@@ -155,12 +120,23 @@ void	ft_parsing(t_lex *list, t_cmd *cmd, char **envp, t_cmd_inf c)
 				cmd->final_cmd[i] = ft_strjoin(cmd->final_cmd[i], " ");
 				cmd->final_cmd[i] = ft_strjoin(cmd->final_cmd[i],
 					cmd->final_arg[j]);
-				// printf("full CMD number %i = %s\n", i, cmd->final_cmd[i]);
 				j++;
 				list = list->next;
 			}
 		}
 	}
+	return (i + 1);
+}
+
+void	ft_parsing(t_lex *list, t_cmd *cmd, char **envp, t_cmd_inf c)
+{
+	int			j;
+	int			k;
+	t_mem_block	*lst;
+
+	lst = NULL;
+
+	cmd->num_cmd = ft_get_input(list,cmd,lst);
 	k = 0;
 	while (cmd->final_cmd[k])
 	{
@@ -182,16 +158,10 @@ void	ft_parsing(t_lex *list, t_cmd *cmd, char **envp, t_cmd_inf c)
 		else if (ft_strncmp(cmd->final_cmd[0], "history", 7) == 0)
 			printf_hst(c.history);
 		else
-			pipex(cmd, envp, (i + 1));
+			pipex(cmd, envp, cmd->num_cmd);
 	}
 	else
 		free(cmd);
-	// free(cmd); // Free memory for an empty token
-	// printf("flags ----------->> %s\n",cmd->flags);
-	// execute_command(cmd,envp);
-	//  ft_free_all(&lst);
-	//  ft_rest();
-	// 	free_cmd_structure(cmd, k, j);
 }
 
 void	minishell_loop(t_cmd_inf c, char **envp)
