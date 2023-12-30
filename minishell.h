@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:24 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/30 14:26:05 by mbelhaj-         ###   ########.fr       */
+/*   Updated: 2023/12/30 22:18:06 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,8 +165,8 @@ void	signal_interrupt(int sig);
 void	sigs(void);
 /**************FIRAS*******************/
 int	is_builtin(char **cmd, t_cmd_inf minish);
-void ft_export(char **cmd, t_cmd_inf minish);
-void ft_unset(char **cmd, t_cmd_inf minish);
+int ft_export(char **cmd, t_cmd_inf minish);
+int ft_unset(char **cmd, t_cmd_inf minish);
 void	ft_free_all(t_mem_block **lst);
 
 /**************builtin*******************/
@@ -175,15 +175,15 @@ void	ft_export_print(t_cmd_inf minish);
 int	find_value(char *str);
 int	check_alphanum(char *str);
 char	*remove_qt(char *str);
-void	ft_env(t_cmd_inf minish);
+int	ft_env(t_cmd_inf minish);
 void	remove_quotes(char *str);
 char	*rm_lastfld(char *cwd);
 char	*get_cwd(void);
 int	last_slash_pos(const char *str);
-void	ft_echo(char **cmd);
-void	ft_pwd(char **cmd, char **env);
+int	ft_echo(char **cmd);
+int	ft_pwd(char **cmd, char **env);
 char	*ft_get_cd(char **cmd);
-void	ft_cd(char **cmd, t_cmd_inf minish);
+int	ft_cd(char **cmd, t_cmd_inf minish);
 int	is_builtin(char **cmd, t_cmd_inf minish);
 int ft_run_builtin(t_cmd *cmd);
 

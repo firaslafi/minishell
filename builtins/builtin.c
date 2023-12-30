@@ -3,16 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 02:30:15 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/30 14:19:56 by mbelhaj-         ###   ########.fr       */
+/*   Updated: 2023/12/30 22:35:20 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_echo(char **cmd)
+void ft_check_nflag(char **cmd, int *n_flag, int *i)
+{
+	if (cmd[1][0] == '-' && cmd[1][1] == 'n' && cmd[1][2] == '\0')
+	{
+		*n_flag = 1;
+		*i = 2;
+	}
+}
+
+int	ft_echo(char **cmd)
 {
 	int	n_flag;
 	int	i;
@@ -21,12 +30,8 @@ void	ft_echo(char **cmd)
 	i = 1;
 	n_flag = 0;
 	if (!cmd[1])
-		return ((void)write(1, "\n", 1));
-	if (cmd[1][0] == '-' && cmd[1][1] == 'n' && cmd[1][2] == '\0')
-	{
-		n_flag = 1;
-		i = 2;
-	}
+		return (write(1, "\n", 1), 1);
+	ft_check_nflag(cmd, &n_flag, &i);
 	printed = 0;
 	while (cmd[i] != NULL)
 	{
@@ -39,9 +44,10 @@ void	ft_echo(char **cmd)
 	}
 	if (!n_flag && printed)
 		write(1, "\n", 1);
+	return (0);
 }
 // priting the pwd a.k.a cwd
-void	ft_pwd(char **cmd, char **env)
+int	ft_pwd(char **cmd, char **env)
 {
 	char	cwd[4096];
 
@@ -49,6 +55,7 @@ void	ft_pwd(char **cmd, char **env)
 	(void)env;
 	getcwd(cwd, sizeof(cwd));
 	ft_putendl_fd(cwd, 1);
+	return (0);
 }
 
 char	*ft_get_cd(char **cmd)
@@ -74,7 +81,7 @@ char	*ft_get_cd(char **cmd)
 	return (cdto_path);
 }
 
-void	ft_cd(char **cmd, t_cmd_inf minish)
+int	ft_cd(char **cmd, t_cmd_inf minish)
 {
 	char	*home_path;
 	char	*cdto_path;
@@ -87,7 +94,7 @@ void	ft_cd(char **cmd, t_cmd_inf minish)
 	if (cmd[1] == NULL)
 	{
 		chdir(home_path);
-		return ;
+		return (1);
 	}
 	cdto_path = ft_get_cd(cmd);
 	if (cdto_path != NULL && chdir(cdto_path) == -1)
@@ -96,8 +103,23 @@ void	ft_cd(char **cmd, t_cmd_inf minish)
 		ft_putstr_fd(cdto_path, 2);
 		ft_putstr_fd(": No such file or directory\n", 2);
 	}
+	return (0);
 }
+// to move somewhere else
+// strchr for token 2d
+int	ft_strchr_2d(char **array)
+{
+	int	i;
 
+	i = 0;
+	while (array[i])
+	{
+		if (ft_strchr(array[i], '$') != NULL)
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 //  check if it is builtin or not
 // i need to do the env variables
@@ -106,20 +128,26 @@ int	is_builtin(char **cmd, t_cmd_inf minish)
 	char	**str;
 
 	str = ft_split(cmd[0], ' ');
+	// handle switching here
+	
+	// 
 	if (ft_strncmp(cmd[0], "echo", 4) == 0)
-		return (ft_echo(str), 0);
+		return (minish.rtn_code = ft_echo(str), minish.rtn_code);
 	else if (ft_strncmp(cmd[0], "pwd", 3) == 0)
-		return (ft_pwd(cmd, minish.env), 0);
+		return (minish.rtn_code = ft_pwd(cmd, minish.env), minish.rtn_code);
 	else if (ft_strncmp(cmd[0], "cd", 2) == 0)
-		return (ft_cd(str, minish), 0);
+		return (minish.rtn_code = ft_cd(str, minish), minish.rtn_code);
 	else if (ft_strncmp(cmd[0], "env", 3) == 0)
-		return (ft_env(minish), 0);
+		return (minish.rtn_code = ft_env(minish), minish.rtn_code);
 	else if (ft_strncmp(cmd[0], "export", 6) == 0)
-		return (ft_export(str, minish), 0);
+		return (ft_export(str, minish), minish.rtn_code);
 	else if (ft_strncmp(cmd[0], "unset", 5) == 0)
-		return (ft_unset(str, minish), 0);
+		return (minish.rtn_code = ft_unset(str, minish), minish.rtn_code);
 	else if (ft_strncmp(cmd[0], "exit", 4) == 0)
-		exit(0);
+		{
+			ft_free_all(&minish.lst);
+			exit(0);
+		}
 	else
 		return (1);
 }

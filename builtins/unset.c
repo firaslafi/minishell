@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 02:38:03 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/30 14:24:35 by mbelhaj-         ###   ########.fr       */
+/*   Updated: 2023/12/30 22:21:13 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,23 +44,24 @@ void	var_search_remove(char *str, t_cmd_inf minish)
 	}
 }
 
-void	ft_unset(char **cmd, t_cmd_inf minish)
+int	ft_unset(char **cmd, t_cmd_inf minish)
 {
 	int	i;
 
 	(void)minish;
 	i = 0;
 	if (!cmd[1])
-		return ;
+		return (1);
 	while (cmd[i])
 	{
 		var_search_remove(cmd[i], minish);
 		i++;
 	}
+	return (0);
 }
 
 // env for env lol
-void	ft_env(t_cmd_inf minish)
+int	ft_env(t_cmd_inf minish)
 {
 	t_list	*current;
 
@@ -71,4 +72,5 @@ void	ft_env(t_cmd_inf minish)
 		current = current->next;
 	}
 	minish.rtn_code = 0;
+	return (0);
 }
