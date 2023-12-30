@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: flafi <flafi@student.42.fr>                +#+  +:+       +#+         #
+#    By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/01 16:40:23 by flafi             #+#    #+#              #
-#    Updated: 2023/12/30 03:33:31 by flafi            ###   ########.fr        #
+#    Updated: 2023/12/30 14:27:03 by mbelhaj-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,10 @@ LIBFT_INC = -I$(LIBFT_DIR)
 READLINE_INC = -I /usr/include/readline
 READLINE_LIB = -lreadline -lhistory
 
-SRCS = minishell.c ./utils/garbage_collector.c ./init/ft_quote.c\
+SRCS = minishell.c\
+./utils/garbage_collector.c\
+./utils/helper.c\
+./init/ft_quote.c\
 ./init/ft_handle_token.c\
 ./init/ft_add_lex.c\
 ./pipex/pipex.c\
@@ -43,8 +46,8 @@ SRCS = minishell.c ./utils/garbage_collector.c ./init/ft_quote.c\
 ./builtins/builtin.c\
 ./builtins/export.c\
 ./builtins/unset.c\
-
-
+./builtins/export_utils.c\
+./builtins/builtin_utils.c\
 
 OBJS = $(SRCS:.c=.o)
 

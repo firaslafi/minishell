@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup_s.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 01:19:23 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/28 01:19:25 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/30 13:01:27 by mbelhaj-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,3 +44,4 @@ char	*ft_strdup_s(const char *s, t_mem_block **lst)
 	}
 	return ((char *) ptr);
 }
+

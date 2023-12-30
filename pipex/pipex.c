@@ -6,7 +6,7 @@
 /*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 19:26:15 by mbelhaj-          #+#    #+#             */
-/*   Updated: 2023/12/30 07:09:11 by mbelhaj-         ###   ########.fr       */
+/*   Updated: 2023/12/30 15:00:28 by mbelhaj-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,10 @@ void	ft_execve(char *argv, char **envp)
 	char	**cmd;
 	char	*path;
 
-	// printf("Executing command: %s\n", argv); // Diagnostic print
 	cmd = ft_split(argv, ' ');
 	if (!cmd)
 	{
-		fprintf(stderr, "Error: Unable to split command.\n");
+		printf("Error: Unable to split command.\n");
 		return ;
 	}
 	if (cmd[0][0] == '/')
@@ -101,21 +100,15 @@ void	ft_execve(char *argv, char **envp)
             printf("no access or invalid\n");
     }
     else
-    {
        path = ft_path(cmd[0], envp);
-    }
-	// path = ft_path(cmd[0], envp);
 	if (!path)
 	{
-		fprintf(stderr, "Error: Command '%s' not found in PATH.\n", cmd[0]);
+		printf("Error: Command '%s' not found in PATH.\n", cmd[0]);
 		free_string_array(cmd);
 		return ;
 	}
-	// printf("Command path resolved: %s\n", path); // Diagnostic print
 	execve(path, cmd, envp);
-	perror("execve error"); // Diagnostic print,
-		// perror will print the last system error
-	// Clean up allocated memory - this will only run if execve fails
+	perror("execve error");
 	free(path);
 	free_string_array(cmd);
 }
@@ -129,88 +122,50 @@ int	pipex(t_cmd *cmds, char **envp, int num_cmds)
 	fd = malloc(sizeof(int *) * (num_cmds - 1));
 	if (!fd)
 	{
-		fprintf(stderr, "Error: Memory allocation failed.\n");
+		printf("Error: Memory allocation failed.\n");
 		return (1);
 	}
-	for (i = 0; i < num_cmds - 1; i++)
+	i = 0;
+	while(i < num_cmds - 1)
 	{
 		fd[i] = malloc(sizeof(int) * 2);
 		if (!fd[i] || pipe(fd[i]) == -1)
 		{
-			fprintf(stderr, "Error: Pipe creation failed.\n");
-			// Cleanup previously allocated pipes
+			printf("Error: Pipe creation failed.\n");
 			while (--i >= 0)
-			{
 				free(fd[i]);
-			}
 			free(fd);
 			return (1);
 		}
+	i++;
 	}
 	for (i = 0; i < num_cmds; i++)
 	{
 		pid = fork();
 		if (pid == -1)
 		{
-			fprintf(stderr, "Error: Fork failed.\n");
-			// Cleanup pipes
-			for (j = 0; j < num_cmds - 1; j++)
-			{
-				free(fd[j]);
-			}
+			printf("Error: Fork failed.\n");
+			j = -1;
+			while (j < num_cmds - 1 )
+				free(fd[++j]);
 			free(fd);
 			return (1);
 		}
 		else if (pid == 0)
 		{ // Child process
 			if (i > 0)
-			{
 				dup2(fd[i - 1][0], STDIN_FILENO);
-					// Redirect stdin from the previous pipe
-			}
 			if (i < num_cmds - 1)
-			{
 				dup2(fd[i][1], STDOUT_FILENO);
-					// Redirect stdout to the next pipe
-			}
-			// Close all pipes in child process
-			for (j = 0; j < num_cmds - 1; j++)
+			j = 0;	
+			while( j < num_cmds - 1)
 			{
 				close(fd[j][0]);
 				close(fd[j][1]);
+				j++;
 			}
-            
             if (i == num_cmds - 1) 
             {
-
-                //  WE NEED TO PROTECT THE OPENING OF FDS !!!!
-                
-                // cmd->output
-                // if one > do this
-                
-                // int fd_op = open("file1", O_WRONLY | O_CREAT | O_TRUNC, 0644);
-                // dup2(fd_op, STDOUT_FILENO);
-
-                // else >> do this
-                
-                // int fd_op = open("file1", O_WRONLY | O_CREAT | O_APPEND, 0644);
-                // dup2(fd_op, STDOUT_FILENO);
-
-                // redirection stuff 
-                
-                // this one should be inside the loop works as a single command
-                // if one < do this
-                
-                // cmd->input
-                // int pip;
-                // pipe(pip);
-                // int fd_ops = open("file1", O_RDONLY, 0644);
-                // dup2(fd_ops, STDIN_FILENO);
-                // close(fd_ops);
-                
-                // cat < blablablaHERE.txt | cat < test.xt
-                // cat
-
                 /********************* here_doc**************/
                 if (cmds->here_doc != NULL)
                 {
@@ -219,8 +174,6 @@ int	pipex(t_cmd *cmds, char **envp, int num_cmds)
                     char    *limiter;
                     int     ipc[2];
 					int		fd;
-                    
-                    printf("----------> 5%s \n",cmds->here_doc);
                     if (pipe(ipc))
                        return(0);   
                     limiter = ft_strjoin(cmds->here_doc,"\n");
@@ -248,8 +201,6 @@ int	pipex(t_cmd *cmds, char **envp, int num_cmds)
                 
                 if (ft_strcmp(cmds->flags,"LG") == 0)
                 {
-                    printf("----------> 1%s \n",cmds->here_doc);
-
                     int fd_input = open(cmds->input, O_RDONLY, 0644);
                     int fd_output = open(cmds->output, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 					if (fd_output == -1)
@@ -261,8 +212,6 @@ int	pipex(t_cmd *cmds, char **envp, int num_cmds)
                 }
 				else if (ft_strcmp(cmds->flags,"LG_G") == 0)
                 {
-                    printf("----------> 1%s \n",cmds->here_doc);
-
                     int fd_ops = open(cmds->input, O_RDONLY, 0644);
                     int fd_op = open(cmds->output, O_WRONLY | O_CREAT | O_APPEND, 0644);
 					dup2(fd_ops, STDIN_FILENO);
@@ -272,22 +221,16 @@ int	pipex(t_cmd *cmds, char **envp, int num_cmds)
                 }
 				else if (ft_strcmp(cmds->flags,"G") == 0)
 				{
-                    printf("----------> 2%s \n",cmds->here_doc);
-
 					int fd_op = open(cmds->output, O_WRONLY | O_CREAT | O_TRUNC, 0644);
                 	dup2(fd_op, STDOUT_FILENO);
 				}
 				else if (ft_strcmp(cmds->flags,"G_G") == 0)
 				{
-                    printf("----------> 3%s \n",cmds->here_doc);
-
 				 	int fd_op = open(cmds->output, O_WRONLY | O_CREAT | O_APPEND, 0644);
                 	dup2(fd_op, STDOUT_FILENO);	
 				}
 				else if (ft_strcmp(cmds->flags,"L") == 0)
 				{
-                    printf("----------> 4%s \n",cmds->here_doc);
-
 					int fd_ops = open(cmds->input, O_RDONLY, 0644);
 					dup2(fd_ops, STDIN_FILENO);
 					close(fd_ops);
@@ -296,18 +239,21 @@ int	pipex(t_cmd *cmds, char **envp, int num_cmds)
             }
                 
 			ft_execve(cmds->final_cmd[i], envp);
-			exit(EXIT_FAILURE); // If execve fails, exit child with error code
+			exit(EXIT_FAILURE);
 		}
 	}
-	// Close all pipes in the parent process
 	for (i = 0; i < num_cmds - 1; i++)
 	{
 		close(fd[i][0]);
 		close(fd[i][1]);
-		free(fd[i]);
+
 	}
+	for (j = 0; j < num_cmds - 1; j++) 
+	{
+    	free(fd[j]);
+	}
+
 	free(fd);
-	// Wait for all child processes to complete
 	for (i = 0; i < num_cmds; i++)
 	{
 		wait(NULL);

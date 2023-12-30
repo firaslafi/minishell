@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 21:31:28 by mbelhaj-          #+#    #+#             */
-/*   Updated: 2023/12/28 05:56:38 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/30 13:09:33 by mbelhaj-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,49 +27,33 @@ void	ft_free(char **str)
 	free(str);
 }
 
-void	ft_error(void)
-{
-	perror("Error");
-	exit(EXIT_FAILURE);
-}
-
-void ft_child(char *cmd1, char **envp, int *fd)
-{
-     close(fd[0]); // Close unused read end of the pipe
-
-    // Redirect stdout to the write end of the pipe
-    dup2(fd[1], STDOUT_FILENO);
-     close(fd[1]); // Close the write end of the pipe
-
-    // Execute cmd1
-  ft_execve(cmd1, envp);
-   
-}
-
-void ft_parent(char *cmd2, char **envp, int *fd)
-{
-    close(fd[1]); // Close the write end of the pipe
-
-    // Redirect stdin to the read end of the pipe
-    dup2(fd[0], STDIN_FILENO);
-     close(fd[0]); // Close the read end of the pipe
-
-    // Execute cmd2
-    ft_execve(cmd2, envp);
-    
-}
-
-// void ft_parent(char *cmd2, char **envp, int *fd) {
-//     close(fd[1]); // Close the write end of the pipe
-//     dup2(fd[0], STDIN_FILENO); // Redirect stdin to the read end of the pipe
-//     close(fd[0]); // Close the read end of the pipe
-
-//     // Execute cmd2
-//     ft_execve(cmd2, envp);
-
-//     // Optionally, you can add an exit here if needed
-//     // exit(0);
+// void	ft_error(void)
+// {
+// 	perror("Error");
+// 	exit(EXIT_FAILURE);
 // }
+
+void	ft_child(char *cmd1, char **envp, int *fd)
+{
+	close(fd[0]); // Close unused read end of the pipe
+	// Redirect stdout to the write end of the pipe
+	dup2(fd[1], STDOUT_FILENO);
+	close(fd[1]); // Close the write end of the pipe
+	// Execute cmd1
+	ft_execve(cmd1, envp);
+}
+
+// Close the write end of the pipe
+// Redirect stdin to the read end of the pipe
+// Close the read end of the pipe
+// Execute cmd2
+void	ft_parent(char *cmd2, char **envp, int *fd)
+{
+	close(fd[1]);
+	dup2(fd[0], STDIN_FILENO);
+	close(fd[0]);
+	ft_execve(cmd2, envp);
+}
 
 char	*ft_getenv(const char *var_name, char **envp)
 {

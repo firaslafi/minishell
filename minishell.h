@@ -6,7 +6,7 @@
 /*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:24 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/30 07:27:11 by mbelhaj-         ###   ########.fr       */
+/*   Updated: 2023/12/30 14:26:05 by mbelhaj-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,5 +168,29 @@ int	is_builtin(char **cmd, t_cmd_inf minish);
 void ft_export(char **cmd, t_cmd_inf minish);
 void ft_unset(char **cmd, t_cmd_inf minish);
 void	ft_free_all(t_mem_block **lst);
+
+/**************builtin*******************/
+
+void	ft_export_print(t_cmd_inf minish);
+int	find_value(char *str);
+int	check_alphanum(char *str);
+char	*remove_qt(char *str);
+void	ft_env(t_cmd_inf minish);
+void	remove_quotes(char *str);
+char	*rm_lastfld(char *cwd);
+char	*get_cwd(void);
+int	last_slash_pos(const char *str);
+void	ft_echo(char **cmd);
+void	ft_pwd(char **cmd, char **env);
+char	*ft_get_cd(char **cmd);
+void	ft_cd(char **cmd, t_cmd_inf minish);
+int	is_builtin(char **cmd, t_cmd_inf minish);
+int ft_run_builtin(t_cmd *cmd);
+
+/**************helper*******************/
+char	*ft_cmd(t_cmd_inf *c);
+void	printf_hst(t_historylist *history);
+int	ft_check(int c);
+
 
 #endif

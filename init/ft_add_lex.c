@@ -6,7 +6,7 @@
 /*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 02:40:59 by mbelhaj-          #+#    #+#             */
-/*   Updated: 2023/12/24 19:01:52 by mbelhaj-         ###   ########.fr       */
+/*   Updated: 2023/12/30 13:02:12 by mbelhaj-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ t_lex	*ft_lex_new(char *str, int token)
 	return (new_element);
 }
 
-
 void	ft_lex_add(t_lex **lst, t_lex *new)
 {
 	t_lex	*tmp;
@@ -45,6 +44,7 @@ void	ft_lex_add(t_lex **lst, t_lex *new)
 	tmp->next = new;
 	new->prev = tmp;
 }
+
 int	ft_add_node(char *str, t_token token, t_lex **list)
 {
 	t_lex	*node;

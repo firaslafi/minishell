@@ -1,14 +1,58 @@
+int ft_run_builtin(t_cmd *cmd)
+{
+		if (ft_strncmp(cmd->final_cmd[0], "echo", 4) == 0)
+		{
+			printf("cmd -----> { %s }\n",cmd->final_cmd[0]);
+			return (0);
+		}
+		else if (ft_strncmp(cmd->final_cmd[0], "pwd", 3) == 0)
+			return (0);
+		else if (ft_strncmp(cmd->final_cmd[0], "cd",2) == 0)
+			return (0);
+		else if (ft_strncmp(cmd->final_cmd[0], "cd",2) == 0)
+			return (0);
+		else if (ft_strncmp(cmd->final_cmd[0], "export",6) == 0)
+			return (0);
+		else if (ft_strncmp(cmd->final_cmd[0], "unset",5) == 0)
+			return (0);
+		else if (ft_strncmp(cmd->final_cmd[0], "exit",4) == 0)
+			return (0);
+		else
+	 		return (1);
+}
+
+	// k = 0;
+	// while (cmd->final_cmd[k])
+	// {
+	// 	j = 0;
+	// 	if (ft_strncmp(&cmd->final_cmd[k][0], "$", 1) == 0)
+	// 	{
+	// 		if (ft_strncmp(&cmd->final_cmd[k][1], "$", 1) == 0)
+	// 			printf("%i", my_getpid());
+	// 		else
+	// 			check_exist_envp(cmd->final_cmd[k], c);
+	// 		j++;
+	// 	}
+	// 	k++;
+	// }
+
+	pid_t my_getpid() {
+    // You could return a random value or a fixed value for testing.
+    // Here's how you could return a random value:
+    srand((unsigned int)time(NULL));
+    return rand() % 10000 + 1000; // Example: return a value between 1000 and 10999
+}
 
 
-ds
-ds
-ds
-ds
-ds
-ds
-dsf
-dsf
-f
-fds
-llds
-<
+	if (cmd->final_cmd != NULL && *cmd->final_cmd != NULL)
+	{
+		if (ft_)
+			is_builtin(cmd->final_cmd, c);
+		if (ft_strncmp(cmd->final_cmd[0], "history", 7) == 0)
+			printf_hst(c.history);
+		free(cmd);
+	}
+	else if (cmd != NULL)
+	{
+		free(cmd); // Free memory for an empty token
+	}
