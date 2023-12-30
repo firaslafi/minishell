@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/30 01:48:41 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/30 03:23:14 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,70 +50,6 @@ int	ft_check(int c)
 	return (0);
 }
 
-// int	ft_get_cmd(t_token *tokens, t_env *env)
-// {
-// 	t_token	*head;
-
-// 	head = tokens;
-// 	if (qcheck(tokens) == -1)
-// 		return (-1);
-// 	while (head)
-// 	{
-// 		if (head->operation == CMD && !head->table)
-// 		{
-// 			if (cmd_maker(head) == -1)
-// 				return (-1);
-// 		}
-// 		else if (head->operation == REDIRECT)
-// 		{
-// 			if (handling(head) == -1)
-// 				return (-1);
-// 		}
-// 		else if (head->operation == HERE_DOC)
-// 		{
-// 			if (h_doc(tokens, env) == -1)
-// 				return (-1);
-// 		}
-// 		head = head->next;
-// 	}
-// 	return (0);
-// }
-
-// /// @brief Creates a command structure (t_command)
-// /// and populates it with information from the CMD token.
-// /// @param tokens
-// /// @return 0
-// int	cmd_maker(t_token *tokens)
-// {
-// 	t_command	*tab;
-
-// 	tab = (t_command *)ft_calloc(1, sizeof(t_command));
-// 	if (!tab)
-// 		return (-1);
-// 	tab->cmd = ft_split_minishell(tokens->cmd, ' ');
-// 	rem_quotes(tab->cmd);
-// 	if (tab->cmd == NULL)
-// 		return (1);
-// 	tab->cmd_name = ft_strdup(tab->cmd[0]);
-// 	tab->in_fd = STDIN;
-// 	tab->out_fd = STDOUT;
-// 	tokens->table = tab;
-// 	return (0);
-// }
-
-void	ft_count_pipes(t_lex *lexer_list, t_cmd_inf *tools)
-{
-	t_lex	*tmp;
-
-	tmp = lexer_list;
-	tools->pipe = 0;
-	while (tmp)
-	{
-		if (tmp->token == PIPE)
-			tools->pipe++;
-		tmp = tmp->next;
-	}
-}
 
 t_cmd	*create_cmd_structure(int cmd_size, int arg_size)
 {
@@ -135,44 +71,6 @@ t_cmd	*create_cmd_structure(int cmd_size, int arg_size)
 	cmd->input = NULL;
 	cmd->output = NULL;
 	return (cmd);
-}
-
-// while (list != NULL)
-// {
-// 	if (list->str != NULL)
-// 	{
-// 		cmd->final_cmd[i] = ft_strdup(list->str);
-// 		printf("new cmd%s\n",cmd->final_cmd[i]);
-// 		list = list->next;
-// 		i++;
-
-// 		while (list != NULL && list->str != NULL)
-// 		{
-// 			cmd->final_arg[j] = ft_strdup(list->str);
-// 			printf("new arg%s\n",cmd->final_arg[j]);
-// 			j++;
-// 			list = list->next;
-// 		}
-// 	}
-// 	else
-// 	{
-// 		list = list->next;
-// 	}
-// }
-
-void	free_cmd_structure(t_cmd *cmd, int cmd_size, int arg_size)
-{
-	for (int k = 0; k < cmd_size; k++)
-	{
-		free(cmd->final_cmd[k]);
-	}
-	free(cmd->final_cmd);
-	for (int k = 0; k < arg_size; k++)
-	{
-		free(cmd->final_arg[k]);
-	}
-	free(cmd->final_arg);
-	free(cmd);
 }
 
 int	ft_check_red(int index)
@@ -268,27 +166,6 @@ void	ft_parsing(t_lex *list, t_cmd *cmd, char **envp)
 	// execute_command(cmd,envp);
 	 pipex(cmd,envp,k,index);
 	// free_cmd_structure(cmd, k, j);
-}
-
-void	print_list(t_lex *list)
-{
-	while (list != NULL)
-	{
-		printf("printf list here: %s\n", list->str);
-		list = list->next;
-	}
-}
-void	print_token(t_lex *list)
-{
-	while (list != NULL)
-	{
-		printf("printf Token here: %i\n", list->token);
-		list = list->next;
-	}
-}
-int	ft_red(void)
-{
-	return (0);
 }
 
 void	printf_hst(t_historylist *history)

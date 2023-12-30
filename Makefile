@@ -6,7 +6,7 @@
 #    By: flafi <flafi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/01 16:40:23 by flafi             #+#    #+#              #
-#    Updated: 2023/12/29 10:29:17 by flafi            ###   ########.fr        #
+#    Updated: 2023/12/30 03:26:25 by flafi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,8 +35,8 @@ READLINE_LIB = -lreadline -lhistory
 SRCS = minishell.c ./utils/garbage_collector.c ./init/ft_quote.c\
 ./init/ft_handle_token.c\
 ./init/ft_add_lex.c\
-./pipex/pipex.c\
-./pipex/pipex_utils.c\
+./run_cmd/pipex.c\
+./run_cmd/pipex_utils.c\
 ./get_envp/ft_strdup_s.c\
 ./get_envp/ft_history.c\
 ./get_envp/sigs.c\

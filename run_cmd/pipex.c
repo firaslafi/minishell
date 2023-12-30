@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 19:26:15 by mbelhaj-          #+#    #+#             */
-/*   Updated: 2023/12/29 11:08:08 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/30 03:21:17 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,32 +201,35 @@ int	pipex(t_cmd *cmds, char **envp, int num_cmds, int index)
                 // cat
 
                 /********************* here_doc**************/
-                // if (cmds->here_doc != NULL)
-                // {
+                if (cmds->here_doc != NULL)
+                {
         
-                //     char    *doc;
-                //     char    *limiter;
-                //     int     ipc[2];
+                    char    *doc;
+                    char    *limiter;
+                    int     ipc[2];
+					int		fd;
                     
-                //     printf("----------> 5%s \n",cmds->here_doc);
-                //     if (pipe(ipc))
-                //        return(0);   
-                //     limiter = ft_strjoin(cmds->here_doc,"\n");
-                //     doc = get_next_line(0);
-                //     while (doc && ft_strncmp(limiter, doc, ft_strlen(doc)))
-                //     {
-                //         ft_putstr_fd(doc, ipc[1]);
-                //         free(doc);
-                //         doc = get_next_line(0);
-                //     }
-                //     free(limiter);
-                //     if (doc)
-                //         free(doc);
-                //     dup2(ipc[0], 0);
-                //     close(ipc[0]);
-                //     close(ipc[1]);
+                    printf("----------> 5%s \n",cmds->here_doc);
+                    if (pipe(ipc))
+                       return(0);   
+                    limiter = ft_strjoin(cmds->here_doc,"\n");
+                    doc = get_next_line(0);
+                    while (doc && ft_strncmp(limiter, doc, ft_strlen(doc)))
+                    {
+                        ft_putstr_fd(doc, ipc[1]);
+                        free(doc);
+                        doc = get_next_line(0);
+                    }
+                    free(limiter);
+                    if (doc)
+                        free(doc);
+                    dup2(ipc[0], 0);
+					fd = open(cmds->output, O_WRONLY | O_CREAT, 0644);
+                    dup2(fd, 1);
+                    close(ipc[0]);
+                    close(ipc[1]);
 
-                // }
+                }
                 /********************* here_doc**************/
                 
                 if (cmds->flag_input == 1 && cmds->flag_output == 1)
@@ -238,6 +241,7 @@ int	pipex(t_cmd *cmds, char **envp, int num_cmds, int index)
 					dup2(fd_ops, STDIN_FILENO);
                 	dup2(fd_op, STDOUT_FILENO);
 					close(fd_ops);
+					close(fd_op);
                 }
 				else if (index == 2)
 				{
