@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gnl.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 15:58:45 by mbelhaj-          #+#    #+#             */
-/*   Updated: 2023/08/12 14:31:47 by mbelhaj-         ###   ########.fr       */
+/*   Updated: 2023/12/30 22:57:05 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*ft_save_data(char *save)
 	gnl.i++;
 	gnl.y = 0;
 	if (!s)
-	{		
+	{
 		free(s);
 		return (NULL);
 	}

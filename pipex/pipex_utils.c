@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 21:31:28 by mbelhaj-          #+#    #+#             */
-/*   Updated: 2023/12/30 13:09:33 by mbelhaj-         ###   ########.fr       */
+/*   Updated: 2023/12/30 23:00:27 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,14 @@ void	ft_free(char **str)
 	free(str);
 }
 
-// void	ft_error(void)
-// {
-// 	perror("Error");
-// 	exit(EXIT_FAILURE);
-// }
-
+// Close unused read end of the pipe
+// Redirect stdout to the write end of the pipe
+// Close the write end of the pipe
 void	ft_child(char *cmd1, char **envp, int *fd)
 {
-	close(fd[0]); // Close unused read end of the pipe
-	// Redirect stdout to the write end of the pipe
+	close(fd[0]);
 	dup2(fd[1], STDOUT_FILENO);
-	close(fd[1]); // Close the write end of the pipe
-	// Execute cmd1
+	close(fd[1]);
 	ft_execve(cmd1, envp);
 }
 

@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 02:30:15 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/30 22:35:20 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/30 23:48:22 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ int	ft_cd(char **cmd, t_cmd_inf minish)
 	}
 	return (0);
 }
+
 // to move somewhere else
 // strchr for token 2d
 int	ft_strchr_2d(char **array)
@@ -129,7 +130,7 @@ int	is_builtin(char **cmd, t_cmd_inf minish)
 
 	str = ft_split(cmd[0], ' ');
 	// handle switching here
-	
+
 	// 
 	if (ft_strncmp(cmd[0], "echo", 4) == 0)
 		return (minish.rtn_code = ft_echo(str), minish.rtn_code);
@@ -144,10 +145,10 @@ int	is_builtin(char **cmd, t_cmd_inf minish)
 	else if (ft_strncmp(cmd[0], "unset", 5) == 0)
 		return (minish.rtn_code = ft_unset(str, minish), minish.rtn_code);
 	else if (ft_strncmp(cmd[0], "exit", 4) == 0)
-		{
-			ft_free_all(&minish.lst);
-			exit(0);
-		}
+	{
+		ft_free_all(&minish.lst);
+		exit(0);
+	}
 	else
 		return (1);
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+         #
+#    By: flafi <flafi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/01 16:40:23 by flafi             #+#    #+#              #
-#    Updated: 2023/12/30 14:27:03 by mbelhaj-         ###   ########.fr        #
+#    Updated: 2023/12/30 23:51:12 by flafi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,12 +34,17 @@ READLINE_LIB = -lreadline -lhistory
 
 SRCS = minishell.c\
 ./utils/garbage_collector.c\
+./utils/token_related.c\
+./utils/mini_utils.c\
 ./utils/helper.c\
 ./init/ft_quote.c\
 ./init/ft_handle_token.c\
 ./init/ft_add_lex.c\
 ./pipex/pipex.c\
 ./pipex/pipex_utils.c\
+./pipex/find_path.c \
+./pipex/fd_related.c \
+./pipex/dup.c \
 ./get_envp/ft_strdup_s.c\
 ./get_envp/ft_history.c\
 ./get_envp/sigs.c\

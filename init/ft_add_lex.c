@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_add_lex.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 02:40:59 by mbelhaj-          #+#    #+#             */
-/*   Updated: 2023/12/30 13:02:12 by mbelhaj-         ###   ########.fr       */
+/*   Updated: 2023/12/30 23:39:13 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,5 @@ int	ft_add_node(char *str, t_token token, t_lex **list)
 	if (!node)
 		return (0);
 	ft_lex_add(list, node);
-
 	return (1);
 }

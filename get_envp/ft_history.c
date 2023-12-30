@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_history.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 01:20:45 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/30 13:01:18 by mbelhaj-         ###   ########.fr       */
+/*   Updated: 2023/12/30 23:40:40 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ void	ft_addhst_back(t_historylist **history, t_historylist *new)
 }
 
 // Add the entry to the front of the list
-void	add_history_front(t_historylist **history, t_historylist *newEntry)
+void	add_history_front(t_historylist **history, t_historylist *new_entry)
 {
-	ft_addhst_back(history, newEntry);
+	ft_addhst_back(history, new_entry);
 }
 
 // Create a new history entry & add to the front of the list
@@ -50,10 +50,10 @@ void	add_history_front(t_historylist **history, t_historylist *newEntry)
 void	ft_add_history(const char *command, t_historylist **history,
 		t_mem_block **lst)
 {
-	t_historylist *newEntry;
+	t_historylist	*new_entry;
 
-	newEntry = ft_malloc(lst, sizeof(t_historylist));
-	newEntry->command = ft_strdup_s(command, lst);
-	newEntry->next = NULL;
-	add_history_front(history, newEntry);
+	new_entry = ft_malloc(lst, sizeof(t_historylist));
+	new_entry->command = ft_strdup_s(command, lst);
+	new_entry->next = NULL;
+	add_history_front(history, new_entry);
 }

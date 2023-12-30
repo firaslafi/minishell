@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 18:27:45 by mbelhaj-          #+#    #+#             */
-/*   Updated: 2023/03/28 02:52:46 by mbelhaj-         ###   ########.fr       */
+/*   Updated: 2023/12/30 23:15:41 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include<unistd.h>
+#include <unistd.h>
 
 void	*ft_memchr(const void *s, int c, int n)
 {
@@ -19,7 +19,7 @@ void	*ft_memchr(const void *s, int c, int n)
 	p = s;
 	while (n--)
 	{
-		if (*p == (unsigned char) c)
+		if (*p == (unsigned char)c)
 		{
 			return ((void *)p);
 		}
@@ -27,4 +27,4 @@ void	*ft_memchr(const void *s, int c, int n)
 	}
 	return (NULL);
 }
-//norminette is okay
+// norminette is okay

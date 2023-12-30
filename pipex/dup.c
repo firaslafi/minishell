@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   dup.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/25 03:42:11 by mbelhaj-          #+#    #+#             */
-/*   Updated: 2023/12/30 23:38:50 by flafi            ###   ########.fr       */
+/*   Created: 2023/12/30 23:37:30 by flafi             #+#    #+#             */
+/*   Updated: 2023/12/30 23:37:51 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-size_t	ft_strlcpy(char *dest, const char *src, size_t n)
+void	ft_dup2(int **fd, int i, int num_cmds)
 {
-	size_t	i;
-
-	i = 0;
-	if (n > 0)
-	{
-		while (i < n - 1 && src[i] != '\0')
-		{
-			dest[i] = src[i];
-			i++;
-		}
-		dest[i] = '\0';
-	}
-	return ((int) ft_strlen(src));
+	if (i > 0)
+		dup2(fd[i - 1][0], STDIN_FILENO);
+	if (i < num_cmds - 1)
+		dup2(fd[i][1], STDOUT_FILENO);
 }

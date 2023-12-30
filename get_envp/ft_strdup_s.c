@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup_s.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 01:19:23 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/30 13:01:27 by mbelhaj-         ###   ########.fr       */
+/*   Updated: 2023/12/30 23:39:30 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ char	*ft_strdup_s(const char *s, t_mem_block **lst)
 
 	len = ft_strlen(s) + 1;
 	ptr = ft_calloc_s(len, 1, lst);
-
-
 	if (!ptr)
 		return (free(ptr), NULL);
 	i = 0;
@@ -44,4 +42,3 @@ char	*ft_strdup_s(const char *s, t_mem_block **lst)
 	}
 	return ((char *) ptr);
 }
-

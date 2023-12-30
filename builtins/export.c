@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 02:36:24 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/30 22:15:12 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/30 23:17:26 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ void	add_or_replace(int pos, t_cmd_inf minish, char *var_name,
 // seprate func
 int	ft_export(char **cmd, t_cmd_inf minish)
 {
-	int i;
-	char *var_name;
-	char *var_value;
+	int		i;
+	char	*var_name;
+	char	*var_value;
 
 	i = 1;
 	var_name = NULL;

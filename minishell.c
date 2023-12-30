@@ -6,115 +6,12 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/30 22:42:49 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/30 23:49:14 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
 #include <time.h>
-
-t_cmd	*create_cmd_structure(int cmd_size, int arg_size, t_mem_block *lst)
-{
-	t_cmd	*cmd;
-
-	cmd = ft_malloc(&lst, sizeof(t_cmd));
-	if (!cmd)
-	{
-		perror("Memory allocation error");
-	}
-	cmd->final_cmd = ft_malloc(&lst, sizeof(char *) * cmd_size);
-	cmd->final_arg = ft_malloc(&lst, sizeof(char *) * arg_size);
-	cmd->input = ft_malloc(&lst, sizeof(char *) * arg_size);
-	cmd->output = ft_malloc(&lst, sizeof(char *) * arg_size);
-	cmd->flags = ft_malloc(&lst, sizeof(char *) * arg_size);
-	if (!cmd->final_cmd || !cmd->final_arg)
-	{
-		perror("Memory allocation error");
-	}
-	cmd->input = NULL;
-	cmd->output = NULL;
-	cmd->flags = ft_strdup_s("", &lst);
-	return (cmd);
-}
-
-pid_t	my_getpid(void)
-{
-	srand((unsigned int)time(NULL));
-	return (rand() % 10000 + 1000);
-}
-
-int	check_exist_envp(char *var_name, t_cmd_inf minish)
-{
-	t_list	*current;
-	char	*lol;
-
-	current = minish.envlst;
-	var_name++;
-	while (current)
-	{
-		if (ft_strncmp(var_name, current->content, ft_strlen(var_name)) == 0)
-		{
-			lol = ft_substr(current->content, ft_strlen(var_name) + 2,
-				ft_strlen(current->content) - ft_strlen(var_name));
-			printf("%s \n", lol);
-			free(lol);
-			return (0);
-		}
-		current = current->next;
-	}
-	return (1);
-}
-
-t_lex	*ft_token_2(t_lex *list, t_cmd *cmd, t_mem_block *lst)
-{
-	list = list->next;
-	cmd->output = ft_strdup_s(list->str, &lst);
-	cmd->flags = ft_strjoin(cmd->flags, "G");
-	list = list->next;
-	return (list);
-}
-
-t_lex	*ft_token_3(t_lex *list, t_cmd *cmd, t_mem_block *lst)
-{
-	list = list->next;
-	cmd->output = ft_strdup_s(list->str, &lst);
-	cmd->flags = ft_strjoin(cmd->flags, "G_G");
-	list = list->next;
-	return (list);
-}
-
-t_lex	*ft_token_4(t_lex *list, t_cmd *cmd, t_mem_block *lst)
-{
-	list = list->next;
-	cmd->input = ft_strdup_s(list->str, &lst);
-	cmd->flags = ft_strjoin(cmd->flags, "L");
-	list = list->next;
-	return (list);
-}
-
-t_lex	*ft_token_5(t_lex *list, t_cmd *cmd, t_mem_block *lst)
-{
-	list = list->next;
-	cmd->here_doc = ft_strdup_s(list->str, &lst);
-	cmd->flags = ft_strjoin(cmd->flags, "L_L");
-	list = list->next;
-	return (list);
-}
-
-t_lex	*ft_all_token(t_lex *list, t_cmd *cmd, t_mem_block *lst)
-{
-	if (list->token == 2)
-		list = ft_token_2(list, cmd, lst);
-	else if (list->token == 3)
-		list = ft_token_3(list, cmd, lst);
-	else if (list->token == 4)
-		list = ft_token_4(list, cmd, lst);
-	else if (list->token == 5)
-		list = ft_token_5(list, cmd, lst);
-	else
-		list = list->next;
-	return (list);
-}
 
 int	ft_get_input(t_lex *list, t_cmd *cmd, t_mem_block *lst)
 {
