@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/30 22:34:59 by mbelhaj-         ###   ########.fr       */
+/*   Updated: 2023/12/30 22:42:49 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ t_lex	*ft_all_token(t_lex *list, t_cmd *cmd, t_mem_block *lst)
 		list = list->next;
 	return (list);
 }
+
 int	ft_get_input(t_lex *list, t_cmd *cmd, t_mem_block *lst)
 {
 	int	i;
@@ -129,16 +130,13 @@ int	ft_get_input(t_lex *list, t_cmd *cmd, t_mem_block *lst)
 			list = ft_all_token(list, cmd, lst);
 		else
 		{
-			i++;
-			cmd->final_cmd[i] = ft_strdup_s(list->str, &lst);
+			cmd->final_cmd[++i] = ft_strdup_s(list->str, &lst);
 			list = list->next;
 			while (list != NULL && list->str != NULL)
 			{
 				cmd->final_arg[j] = ft_strdup_s(list->str, &lst);
 				cmd->final_cmd[i] = ft_strjoin(cmd->final_cmd[i], " ");
-				cmd->final_cmd[i] = ft_strjoin(cmd->final_cmd[i],
-					cmd->final_arg[j]);
-				j++;
+				cmd->final_cmd[i] = ft_strjoin(cmd->final_cmd[i], cmd->final_arg[j++]);
 				list = list->next;
 			}
 		}
