@@ -3,40 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/30 03:23:14 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/30 07:47:16 by mbelhaj-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
 
-char	*ft_cmd(t_cmd_inf *c)
+char *ft_cmd(t_cmd_inf *c)
 {
-	char	*input;
-	char	**token;
+    char *input;
+    char **token;
 
-	// firas
-	input = readline(ANSI_COLOR_GREEN "MyShell$ " ANSI_COLOR_RESET);
-	if (input == NULL)
-		return (NULL); // Exit the loop if input is NULL (EOF or error)
-	if (input[0] != '\0')
-	{
-	    token = ft_split(input, ' ');
-		add_history(input);
-		token = history_tokenize(input);
-		ft_add_history(input, &c->history, &c->lst);
-		free(input);
-	}
-	// firas
-	// rl_bind_key('\t', rl_insert);
-	// cmd = readline("minishell >");
-	// if (!cmd)
-	// 	printf("\nExiting...\n");
-	// if (cmd[0] != '\0')
-	// 	add_history(cmd);
-	return (input);
+    input = readline(ANSI_COLOR_GREEN "MyShell$ " ANSI_COLOR_RESET);
+    if (input == NULL)
+            return (NULL); // Exit the loop if input is NULL (EOF or error)
+    if (input[0] != '\0')
+    {
+        token = ft_split(input, ' ');
+            add_history(input);
+            token = history_tokenize(input);
+            ft_add_history(input, &c->history, &c->lst);
+            // free(input);
+    }
+
+    // Corrected usage of rl_replace_line to reset the prompt without ANSI codes
+    rl_replace_line("", 0);
+    rl_redisplay();
+    // rl_on_new_line();
+	c->input = ft_strdup(input);
+	free(input);
+    return (c->input);
 }
 
 int	ft_check(int c)
@@ -51,27 +50,80 @@ int	ft_check(int c)
 }
 
 
-t_cmd	*create_cmd_structure(int cmd_size, int arg_size)
+t_cmd	*create_cmd_structure(int cmd_size, int arg_size, t_mem_block *lst)
 {
 	t_cmd	*cmd;
 
-	cmd = malloc(sizeof(t_cmd));
+	cmd = ft_malloc(&lst, sizeof(t_cmd));
 	if (!cmd)
 	{
 		perror("Memory allocation error");
 	}
-	cmd->final_cmd = malloc(sizeof(char *) * cmd_size);
-	cmd->final_arg = malloc(sizeof(char *) * arg_size);
-	cmd->input = malloc(sizeof(char *) * arg_size);
-	cmd->output = malloc(sizeof(char *) * arg_size);
+	cmd->final_cmd = ft_malloc(&lst, sizeof(char *) * cmd_size);
+	cmd->final_arg = ft_malloc(&lst,sizeof(char *) * arg_size);
+	cmd->input = ft_malloc(&lst,sizeof(char *) * arg_size);
+	cmd->output = ft_malloc(&lst,sizeof(char *) * arg_size);
+	cmd->flags = ft_malloc(&lst, sizeof(char *) * arg_size);
 	if (!cmd->final_cmd || !cmd->final_arg)
 	{
 		perror("Memory allocation error");
 	}
 	cmd->input = NULL;
 	cmd->output = NULL;
+	cmd->flags = ft_strdup_s("", &lst);
 	return (cmd);
 }
+
+
+int	ft_strchr_2d(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+	{
+		if (ft_strchr(array[i], '$') != NULL)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+
+// void	handle_dolla(t_mini *minish, char **token)
+// {
+// 	int	i;
+// 	int	j;
+
+// 	(void)minish;
+// 	j = 0;
+// 	i = 0;
+// 	while (token[i])
+// 	{
+// 		if (ft_strchr(token[i], '$') != NULL)
+// 		{
+// 			while (token[i][j])
+// 			{
+// 				if (token[i][j] == '$' && token[i][j + 1] && token[i][j
+// 					+ 1] == '$')
+// 				{
+// 					printf("%i", getpid());
+// 					j++;
+// 				}
+// 				else
+// 				{
+// 					check_exist_envp(token[i], *minish);
+// 					j++;
+// 				}
+// 				j++;
+// 			}
+// 			j = 0;
+// 		}
+// 		i++;
+// 	}
+// 	// printf("MyShell : %i\n", minish->rtn_code);
+// }
+
 
 int	ft_check_red(int index)
 {
@@ -94,44 +146,40 @@ void	ft_parsing(t_lex *list, t_cmd *cmd, char **envp)
 	int	i;
 	int	j;
 	int	k;
-    int index;
-
+	
+	t_mem_block *lst = NULL;
 	i = -1;
 	j = 0;
-    index = 0;
-    cmd->flag_input = 0;
 	while (list != NULL)
 	{
 		if (list->str == NULL)
 		{
-		    if (ft_check_red(list->token) == 2)
+		    if (list->token == 2)
 			{
 				list = list->next;
-				cmd->output = ft_strdup(list->str);
-                index = 2;
-                cmd->flag_output = 1;
+				cmd->output = ft_strdup_s(list->str, &lst);
+				cmd->flags = ft_strjoin(cmd->flags,"G");
 				list = list->next;
 			}
-            else if (ft_check_red(list->token) == 3)
+            else if (list->token == 3)
 			{
 				list = list->next;
-				cmd->output_ap = ft_strdup(list->str);
-                index = 3;
+				cmd->output = ft_strdup_s(list->str, &lst);
+                cmd->flags = ft_strjoin(cmd->flags,"G_G");
 				list = list->next;
 			}
-            else if (ft_check_red(list->token) == 4)
+            else if (list->token == 4)
 			{
 				list = list->next;
-				cmd->input = ft_strdup(list->str);
-                index = 4;
-                cmd->flag_input = 1;
+				cmd->input = ft_strdup_s(list->str, &lst);
+                cmd->flags = ft_strjoin(cmd->flags,"L");
 				list = list->next;
 			}
-            else if (ft_check_red(list->token) == 5)
+            else if (list->token == 5)
 			{
 				list = list->next;
-				cmd->here_doc = ft_strdup(list->str);
-                index = 5;
+				cmd->here_doc = ft_strdup_s(list->str, &lst);
+                cmd->flags = ft_strjoin(cmd->flags,"L_L");
 				list = list->next;
 			}
 			else
@@ -140,12 +188,12 @@ void	ft_parsing(t_lex *list, t_cmd *cmd, char **envp)
 		else
 		{
 			i++;
-			cmd->final_cmd[i] = ft_strdup(list->str);
+			cmd->final_cmd[i] = ft_strdup_s(list->str, &lst);
 			// printf("new cmd %s\n", cmd->final_cmd[i]);
 			list = list->next;
 			while (list != NULL && list->str != NULL)
 			{
-				cmd->final_arg[j] = ft_strdup(list->str);
+				cmd->final_arg[j] = ft_strdup_s(list->str, &lst);
 				cmd->final_cmd[i] = ft_strjoin(cmd->final_cmd[i], " ");
 				cmd->final_cmd[i] = ft_strjoin(cmd->final_cmd[i],
 					cmd->final_arg[j]);
@@ -155,17 +203,19 @@ void	ft_parsing(t_lex *list, t_cmd *cmd, char **envp)
 			}
 		}
 	}
-	printf("input  = %s\n", cmd->input);
-	printf("OUTPUT  = %s\n", cmd->output);
+
 	k = 0;
 	while (k < i + 1)
 	{
-		printf("CMD ----------->> %s\n", cmd->final_cmd[k]);
+		// printf("CMD ----------->> %s\n", cmd->final_cmd[k]);
 		k++;
 	}
+	// printf("flags ----------->> %s\n",cmd->flags);
 	// execute_command(cmd,envp);
-	 pipex(cmd,envp,k,index);
-	// free_cmd_structure(cmd, k, j);
+	 pipex(cmd,envp,k);
+	//  ft_free_all(&lst);
+	//  ft_rest();
+// 	free_cmd_structure(cmd, k, j);
 }
 
 void	printf_hst(t_historylist *history)
@@ -181,6 +231,18 @@ void	printf_hst(t_historylist *history)
 		current = current->next;
 	}
 }
+void	free_split(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
+}
 void	minishell_loop(t_cmd_inf c, char **envp)
 {
 	char	*cmd;
@@ -194,13 +256,15 @@ void	minishell_loop(t_cmd_inf c, char **envp)
 		cmd = ft_cmd(&c);
 		if (!cmd)
 		{
-			// free
+			free(cmd);
 			exit(0);
 		}
-
-		token = create_cmd_structure(20, 20);
+		t_mem_block *lst = NULL;
+		token = create_cmd_structure(10, 10, lst);
 		c.command = ft_strtrim(cmd, " ");
-		printf("result 1  %s\n", c.command);
+		//  if (c.input)
+		// 		free(c.input);
+		// printf("result 1  %s\n", c.command);
 		if (!ft_double_qoute(c.command))
 			printf("no double quote \n");
 		if (!ft_single_quote(c.command))
@@ -212,7 +276,7 @@ void	minishell_loop(t_cmd_inf c, char **envp)
 		{
 			if (is_builtin(token->final_cmd, c) == 0)
 				;
-			else if (ft_strncmp(token->final_cmd[0], "history", 7) == 0)
+			if (ft_strncmp(token->final_cmd[0], "history", 7) == 0)
 				printf_hst(c.history);
 			// else
 			// {
@@ -224,6 +288,14 @@ void	minishell_loop(t_cmd_inf c, char **envp)
 		{
 			free(token); // Free memory for an empty token
 		}
+		// ft_free_all(c.lst);
+		ft_free_all(&lst);
+		// free(token->input);
+		// free(token->output);
+		// // free(token->here_doc);
+		// free(token->flags);
+		// free_split(token->final_cmd);
+		// free_split(token->final_arg);
 		// printf("input  = %s\n", token->input);
 		// printf("OUTPUT  = %s\n", token->output);
 		// ft_red(token);
@@ -242,5 +314,6 @@ int	main(int argc, char **argv, char **envp)
 	}
 	sigs();
 	minishell_loop(c, envp);
+	rl_clear_history();
 	return (0);
 }

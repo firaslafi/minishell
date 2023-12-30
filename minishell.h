@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:24 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/29 10:21:19 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/30 07:27:11 by mbelhaj-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef enum s_token
 {
     PIPE = 1,        // Token representing a pipe '|', assigned value 1
     GREAT,           // Token representing '>', assigned default value (2)
-    GREAT_GREAT,     // Token representing '>>', assigned default value (3)
+    GREAT_GREAT,     // Token representing '>>', assigned de fault value (3)
     LESS,            // Token representing '<', assigned default value (4)
     LESS_LESS,       // Token representing '<<', assigned default value (5)
 } t_token;          // Alias the enumeration as 't_token'
@@ -66,9 +66,8 @@ typedef struct s_cmd
 	char  *output;
 	char  *output_ap;
 	char *here_doc;
-	int flag_input;
-	int flag_output;
-	int   token;
+	char *flags;
+	int num_cmd;
 }						t_cmd;
 
 
@@ -101,12 +100,14 @@ typedef struct s_cmd_inf
     int in_fd;
     int out_fd;
 	// firas
+	t_mem_block *lst;
+	char *input;
 	char **env;
     t_list *envlst;
     char *pwd;
     int exp_flag;
     int rtn_code;
-	t_mem_block		*lst;
+	// t_mem_block		*lst;
 	t_historylist	*history;
 	
 }				t_cmd_inf;
@@ -141,7 +142,7 @@ char	*ft_getenv(const char *var_name, char **envp);
 char	*ft_path(char *pathToFind, char **envp);
 char	*ft_find(char *pathcopy, char **pathsegments, char *pathToFind);
 void	ft_execve(char *argv, char **envp);
-int	pipex(t_cmd *cmd, char **envp, int num_cmds,int index);
+int	pipex(t_cmd *cmd, char **envp, int num_cmds);
 
 
 // int pipex(char **cmds, char **envp);
@@ -166,5 +167,6 @@ void	sigs(void);
 int	is_builtin(char **cmd, t_cmd_inf minish);
 void ft_export(char **cmd, t_cmd_inf minish);
 void ft_unset(char **cmd, t_cmd_inf minish);
+void	ft_free_all(t_mem_block **lst);
 
 #endif

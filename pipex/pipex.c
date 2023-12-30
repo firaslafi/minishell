@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 19:26:15 by mbelhaj-          #+#    #+#             */
-/*   Updated: 2023/12/30 03:21:17 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/30 07:09:11 by mbelhaj-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,21 +86,32 @@ void	ft_execve(char *argv, char **envp)
 	char	**cmd;
 	char	*path;
 
-	printf("Executing command: %s\n", argv); // Diagnostic print
+	// printf("Executing command: %s\n", argv); // Diagnostic print
 	cmd = ft_split(argv, ' ');
 	if (!cmd)
 	{
 		fprintf(stderr, "Error: Unable to split command.\n");
 		return ;
 	}
-	path = ft_path(cmd[0], envp);
+	if (cmd[0][0] == '/')
+    {
+        if (access(cmd[0], X_OK) == 0)
+            path = cmd[0];
+        else
+            printf("no access or invalid\n");
+    }
+    else
+    {
+       path = ft_path(cmd[0], envp);
+    }
+	// path = ft_path(cmd[0], envp);
 	if (!path)
 	{
 		fprintf(stderr, "Error: Command '%s' not found in PATH.\n", cmd[0]);
 		free_string_array(cmd);
 		return ;
 	}
-	printf("Command path resolved: %s\n", path); // Diagnostic print
+	// printf("Command path resolved: %s\n", path); // Diagnostic print
 	execve(path, cmd, envp);
 	perror("execve error"); // Diagnostic print,
 		// perror will print the last system error
@@ -109,7 +120,7 @@ void	ft_execve(char *argv, char **envp)
 	free_string_array(cmd);
 }
 
-int	pipex(t_cmd *cmds, char **envp, int num_cmds, int index)
+int	pipex(t_cmd *cmds, char **envp, int num_cmds)
 {
 	int		**fd;
 	pid_t	pid;
@@ -224,7 +235,10 @@ int	pipex(t_cmd *cmds, char **envp, int num_cmds, int index)
                     if (doc)
                         free(doc);
                     dup2(ipc[0], 0);
-					fd = open(cmds->output, O_WRONLY | O_CREAT, 0644);
+					if (ft_strcmp(cmds->flags,"L_LG") == 0)
+						fd = open(cmds->output, O_WRONLY | O_CREAT| O_TRUNC, 0644);
+					else
+						fd = open(cmds->output, O_WRONLY | O_CREAT| O_APPEND, 0644);
                     dup2(fd, 1);
                     close(ipc[0]);
                     close(ipc[1]);
@@ -232,32 +246,45 @@ int	pipex(t_cmd *cmds, char **envp, int num_cmds, int index)
                 }
                 /********************* here_doc**************/
                 
-                if (cmds->flag_input == 1 && cmds->flag_output == 1)
+                if (ft_strcmp(cmds->flags,"LG") == 0)
+                {
+                    printf("----------> 1%s \n",cmds->here_doc);
+
+                    int fd_input = open(cmds->input, O_RDONLY, 0644);
+                    int fd_output = open(cmds->output, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+					if (fd_output == -1)
+						close(fd_output);
+					dup2(fd_input, STDIN_FILENO);
+                	dup2(fd_output, STDOUT_FILENO);
+					close(fd_input);
+					close(fd_output);
+                }
+				else if (ft_strcmp(cmds->flags,"LG_G") == 0)
                 {
                     printf("----------> 1%s \n",cmds->here_doc);
 
                     int fd_ops = open(cmds->input, O_RDONLY, 0644);
-                    int fd_op = open(cmds->output, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+                    int fd_op = open(cmds->output, O_WRONLY | O_CREAT | O_APPEND, 0644);
 					dup2(fd_ops, STDIN_FILENO);
                 	dup2(fd_op, STDOUT_FILENO);
 					close(fd_ops);
 					close(fd_op);
                 }
-				else if (index == 2)
+				else if (ft_strcmp(cmds->flags,"G") == 0)
 				{
                     printf("----------> 2%s \n",cmds->here_doc);
 
 					int fd_op = open(cmds->output, O_WRONLY | O_CREAT | O_TRUNC, 0644);
                 	dup2(fd_op, STDOUT_FILENO);
 				}
-				else if (index == 3)
+				else if (ft_strcmp(cmds->flags,"G_G") == 0)
 				{
                     printf("----------> 3%s \n",cmds->here_doc);
 
-				 	int fd_op = open(cmds->output_ap, O_WRONLY | O_CREAT | O_APPEND, 0644);
+				 	int fd_op = open(cmds->output, O_WRONLY | O_CREAT | O_APPEND, 0644);
                 	dup2(fd_op, STDOUT_FILENO);	
 				}
-				else if (index == 4)
+				else if (ft_strcmp(cmds->flags,"L") == 0)
 				{
                     printf("----------> 4%s \n",cmds->here_doc);
 

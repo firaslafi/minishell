@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 02:30:15 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/28 03:14:20 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/30 07:46:18 by mbelhaj-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_echo(char **cmd)
 	int	n_flag;
 	int	i;
 	int printed;
-
+	int k = 0;
 	i = 1;
 	n_flag = 0;
 	if (!cmd[1])
@@ -45,6 +45,11 @@ void	ft_echo(char **cmd)
 		write(1, "\n", 1);
 		return ;
 	}
+	// while (cmd[k])
+	// {
+	// 	printf("----------->> {%s} \n",cmd[k]);
+	// 	k++;
+	// }
 	if (cmd[1][0] == '-' && cmd[1][1] == 'n' && cmd[1][2] == '\0')
 	{
 		n_flag = 1;
@@ -71,7 +76,7 @@ void	ft_pwd(char **cmd, char **env)
 	(void)cmd;
 	(void)env;
 	getcwd(cwd, sizeof(cwd));
-	ft_putendl_fd(cwd, 1);
+	// ft_putendl_fd(cwd, 1);
 }
 
 // get the current working directory
