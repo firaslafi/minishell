@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 02:36:24 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/30 12:53:04 by mbelhaj-         ###   ########.fr       */
+/*   Updated: 2023/12/30 22:15:12 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	add_or_replace(int pos, t_cmd_inf minish, char *var_name,
 
 // verify the allocaiton how its made and change it
 // seprate func
-void	ft_export(char **cmd, t_cmd_inf minish)
+int	ft_export(char **cmd, t_cmd_inf minish)
 {
 	int i;
 	char *var_name;
@@ -82,6 +82,7 @@ void	ft_export(char **cmd, t_cmd_inf minish)
 			ft_putstr_fd("bash: export: '", 2);
 			ft_putstr_fd(cmd[i], 2);
 			ft_putendl_fd("': not a valid identifier", 2);
+			minish.rtn_code = 1;
 		}
 		var_name = ft_substr(cmd[i], 0, find_value(cmd[i]));
 		int pos = find_value(cmd[i]);
@@ -89,4 +90,5 @@ void	ft_export(char **cmd, t_cmd_inf minish)
 		add_or_replace(pos, minish, var_name, var_value);
 		i++;
 	}
+	return (minish.rtn_code = 0, 0);
 }
