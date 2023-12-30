@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbelhaj- <mbelhaj-@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 23:28:44 by mbelhaj-          #+#    #+#             */
-/*   Updated: 2023/08/12 14:31:07 by mbelhaj-         ###   ########.fr       */
+/*   Updated: 2023/12/30 02:04:56 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,5 @@ char	*ft_line(char *save);
 char	*ft_save_data(char *save);
 char	*ft_read_data(int fd, char *save, char *buff);
 char	*ft_just_malloc(char *s1);
-
+int	ft_strcmp(char *s1, char *s2);
 #endif

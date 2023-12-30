@@ -1,16 +1,9 @@
-Executing command: tail -5
-Command path resolved: /usr/bin/tail
--rw-r--r--   1 flafi  2022_heilbronn   4997 Dec 29 10:21 minishell.h
--rw-r--r--   1 flafi  2022_heilbronn   6020 Dec 29 11:06 minishell.o
-drwxr-xr-x   8 flafi  2022_heilbronn    272 Dec 29 05:39 parse
-drwxr-xr-x   7 flafi  2022_heilbronn    238 Dec 29 11:06 pipex
-drwxr-xr-x   4 flafi  2022_heilbronn    136 Dec 29 11:06 utils
 Executing command: sort
 Command path resolved: /usr/bin/sort
--rw-r--r--   1 flafi  2022_heilbronn   4997 Dec 29 10:21 minishell.h
--rw-r--r--   1 flafi  2022_heilbronn   6020 Dec 29 11:06 minishell.o
-Command path resolved: /usr/bin/tail
-Executing command: tail -5
-drwxr-xr-x   4 flafi  2022_heilbronn    136 Dec 29 11:06 utils
-drwxr-xr-x   7 flafi  2022_heilbronn    238 Dec 29 11:06 pipex
-drwxr-xr-x   8 flafi  2022_heilbronn    272 Dec 29 05:39 parse
+1
+2
+4
+4
+5
+52
+57
