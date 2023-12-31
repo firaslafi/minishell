@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:24 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/31 01:54:25 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/31 04:36:10 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,20 +56,12 @@ typedef struct mem_block
 	struct mem_block		*next;
 }							t_mem_block;
 
-typedef struct s_mshell
-{
-	int						in_fd;
-	int						out_fd;
-	int						exit;
-}							t_mshell;
-
 typedef struct s_cmd
 {
 	char					**final_cmd;
 	char					**final_arg;
 	char					*input;
 	char					*output;
-	char					*output_ap;
 	char					*here_doc;
 	char					*flags;
 	int						num_cmd;
