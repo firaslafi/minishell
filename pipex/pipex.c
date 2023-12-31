@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 19:26:15 by mbelhaj-          #+#    #+#             */
-/*   Updated: 2023/12/30 23:38:58 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/31 03:31:11 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	ft_execve(char *argv, char **envp)
 	char	**cmd;
 	char	*path;
 
+	path = NULL;
 	cmd = ft_split(argv, ' ');
 	if (!cmd)
 		return (printf("Error: Unable to split command.\n"), (void)0);
@@ -36,7 +37,6 @@ void	ft_execve(char *argv, char **envp)
 		return ;
 	}
 	execve(path, cmd, envp);
-	perror("execve error");
 	free(path);
 	free_string_array(cmd);
 }

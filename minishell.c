@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/30 23:49:14 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/31 03:30:16 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	ft_get_input(t_lex *list, t_cmd *cmd, t_mem_block *lst)
 			{
 				cmd->final_arg[j] = ft_strdup_s(list->str, &lst);
 				cmd->final_cmd[i] = ft_strjoin(cmd->final_cmd[i], " ");
-				cmd->final_cmd[i] = ft_strjoin(cmd->final_cmd[i], cmd->final_arg[j++]);
+				cmd->final_cmd[i] = ft_strjoin(cmd->final_cmd[i],
+						cmd->final_arg[j++]);
 				list = list->next;
 			}
 		}
@@ -44,12 +45,10 @@ int	ft_get_input(t_lex *list, t_cmd *cmd, t_mem_block *lst)
 int	ft_dollar_sign(t_cmd *cmd, t_cmd_inf c)
 {
 	int	k;
-	int	j;
 
 	k = 0;
 	while (cmd->final_cmd[k])
 	{
-		j = 0;
 		if (ft_strncmp(&cmd->final_cmd[k][0], "$", 1) == 0)
 		{
 			if (ft_strncmp(&cmd->final_cmd[k][1], "$", 1) == 0)
@@ -62,7 +61,6 @@ int	ft_dollar_sign(t_cmd *cmd, t_cmd_inf c)
 				check_exist_envp(cmd->final_cmd[k], c);
 				return (1);
 			}
-			j++;
 		}
 		k++;
 	}
@@ -71,15 +69,13 @@ int	ft_dollar_sign(t_cmd *cmd, t_cmd_inf c)
 
 void	ft_parsing(t_lex *list, t_cmd *cmd, char **envp, t_cmd_inf c)
 {
-	int			j;
-	int			k;
 	t_mem_block	*lst;
 
 	lst = NULL;
 	cmd->num_cmd = ft_get_input(list, cmd, lst);
-	if (cmd->final_cmd != NULL && *cmd->final_cmd != NULL)
-		if (ft_dollar_sign(cmd, c))
-			ft_free(cmd->final_cmd);
+	// if (cmd->final_cmd != NULL && *cmd->final_cmd != NULL)
+		// if (ft_dollar_sign(cmd, c))
+		// 	ft_free(cmd->final_cmd);
 	if (cmd->final_cmd != NULL && *cmd->final_cmd != NULL)
 	{
 		if (!ft_run_builtin(cmd))

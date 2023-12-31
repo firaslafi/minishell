@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 02:36:24 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/30 23:17:26 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/31 00:56:07 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,16 @@ void	add_or_replace(int pos, t_cmd_inf minish, char *var_name,
 int	ft_export(char **cmd, t_cmd_inf minish)
 {
 	int		i;
+	int		pos;
 	char	*var_name;
 	char	*var_value;
 
-	i = 1;
+	i = 0;
 	var_name = NULL;
 	var_value = NULL;
 	if (!cmd[1])
 		ft_export_print(minish);
-	while (cmd[i])
+	while (cmd[++i])
 	{
 		if (check_alphanum(cmd[i]) == 0)
 		{
@@ -85,10 +86,9 @@ int	ft_export(char **cmd, t_cmd_inf minish)
 			minish.rtn_code = 1;
 		}
 		var_name = ft_substr(cmd[i], 0, find_value(cmd[i]));
-		int pos = find_value(cmd[i]);
+		pos = find_value(cmd[i]);
 		var_value = ft_substr(cmd[i], pos + 1, ft_strlen(cmd[i]) - pos - 1);
 		add_or_replace(pos, minish, var_name, var_value);
-		i++;
 	}
 	return (minish.rtn_code = 0, 0);
 }

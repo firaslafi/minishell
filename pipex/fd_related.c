@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 23:05:44 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/30 23:14:02 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/31 03:32:35 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int	ft_open_here(t_cmd *cmds)
 	int		ipc[2];
 	int		fd;
 
+	fd = 0;
 	if (pipe(ipc))
 		return (0);
 	limiter = ft_strjoin(cmds->here_doc, "\n");

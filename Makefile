@@ -6,7 +6,7 @@
 #    By: flafi <flafi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/01 16:40:23 by flafi             #+#    #+#              #
-#    Updated: 2023/12/30 23:51:12 by flafi            ###   ########.fr        #
+#    Updated: 2023/12/31 03:29:51 by flafi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ WHITE = \033[0;97m
 
 .SILENT:
 NAME = minishell
-CFLAGS = 
+CFLAGS = -Wall -Wextra -Werror
 CC = gcc
 
 LIBFT_DIR = ./libft
