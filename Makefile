@@ -6,7 +6,7 @@
 #    By: flafi <flafi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/01 16:40:23 by flafi             #+#    #+#              #
-#    Updated: 2023/12/31 03:29:51 by flafi            ###   ########.fr        #
+#    Updated: 2023/12/31 04:28:54 by flafi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ SRCS = minishell.c\
 ./get_envp/ft_history.c\
 ./get_envp/sigs.c\
 ./builtins/builtin.c\
+./builtins/builtin_utils2.c\
 ./builtins/export.c\
 ./builtins/unset.c\
 ./builtins/export_utils.c\

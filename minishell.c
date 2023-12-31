@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:19:21 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/31 03:30:16 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/31 04:22:15 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,6 @@ void	ft_parsing(t_lex *list, t_cmd *cmd, char **envp, t_cmd_inf c)
 
 	lst = NULL;
 	cmd->num_cmd = ft_get_input(list, cmd, lst);
-	// if (cmd->final_cmd != NULL && *cmd->final_cmd != NULL)
-		// if (ft_dollar_sign(cmd, c))
-		// 	ft_free(cmd->final_cmd);
 	if (cmd->final_cmd != NULL && *cmd->final_cmd != NULL)
 	{
 		if (!ft_run_builtin(cmd))

@@ -6,7 +6,7 @@
 /*   By: flafi <flafi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 02:36:24 by flafi             #+#    #+#             */
-/*   Updated: 2023/12/31 00:56:07 by flafi            ###   ########.fr       */
+/*   Updated: 2023/12/31 04:30:50 by flafi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,16 @@ int	ft_export(char **cmd, t_cmd_inf minish)
 		add_or_replace(pos, minish, var_name, var_value);
 	}
 	return (minish.rtn_code = 0, 0);
+}
+
+// priting the pwd a.k.a cwd
+int	ft_pwd(char **cmd, char **env)
+{
+	char	cwd[4096];
+
+	(void)cmd;
+	(void)env;
+	getcwd(cwd, sizeof(cwd));
+	ft_putendl_fd(cwd, 1);
+	return (0);
 }
